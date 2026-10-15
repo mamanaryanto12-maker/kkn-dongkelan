@@ -4,7 +4,7 @@
   "regions": ["syd1"],
   "functions": {
     "api/index.js": {
-      "includeFiles": ["views/**", "public/**"],
+      "includeFiles": "views/**,public/**",
       "maxDuration": 30
     }
   },
