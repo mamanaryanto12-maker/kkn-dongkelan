@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Seed data awal proyek website KKN Dongkelan Asoy.
+ * Seed data awal proyek website KKN Dongkelan Nalarasa.
  *
  * Sumber data:
  *  - DATA PESERTA KKN (nama, NIM, program studi, jabatan)
@@ -102,8 +102,8 @@ const SETTINGS = {
   maps_query: 'Dusun Dongkelan Sidorejo Godean Sleman',
   hero_eyebrow: 'Kuliah Kerja Nyata - Universitas Negeri Yogyakarta',
   hero_title: 'Menumbuhkan Dusun Dongkelan Bersama Warga',
-  hero_desc: 'Website resmi kegiatan KKN Kelompok Dongkelan Asoy: profil kelompok, program kerja, agenda kegiatan, dan dokumentasi pengabdian di Padukuhan Dongkelan, Sidorejo, Godean, Sleman.',
-  about_latar: 'Kuliah Kerja Nyata (KKN) merupakan mata kuliah pengabdian kepada masyarakat yang dilaksanakan mahasiswa Universitas Negeri Yogyakarta. Kegiatan ini menjadi ruang bagi mahasiswa untuk belajar bersama masyarakat, menerapkan ilmu yang dipelajari, serta turut mendukung pembangunan di tingkat padukuhan.\n\nMelalui KKN di Dusun Dongkelan, kelompok Dongkelan Asoy berupaya menghadirkan program yang relevan dengan kebutuhan warga, mulai dari pendidikan, lingkungan, kesehatan, pemberdayaan ekonomi, hingga pemanfaatan teknologi informasi.',
+  hero_desc: 'Website resmi kegiatan KKN Kelompok Dongkelan Nalarasa: profil kelompok, program kerja, agenda kegiatan, dan dokumentasi pengabdian di Padukuhan Dongkelan, Sidorejo, Godean, Sleman.',
+  about_latar: 'Kuliah Kerja Nyata (KKN) merupakan mata kuliah pengabdian kepada masyarakat yang dilaksanakan mahasiswa Universitas Negeri Yogyakarta. Kegiatan ini menjadi ruang bagi mahasiswa untuk belajar bersama masyarakat, menerapkan ilmu yang dipelajari, serta turut mendukung pembangunan di tingkat padukuhan.\n\nMelalui KKN di Dusun Dongkelan, kelompok Dongkelan Nalarasa berupaya menghadirkan program yang relevan dengan kebutuhan warga, mulai dari pendidikan, lingkungan, kesehatan, pemberdayaan ekonomi, hingga pemanfaatan teknologi informasi.',
   about_tujuan: 'Menerapkan ilmu dan keterampilan mahasiswa untuk membantu memecahkan permasalahan yang dihadapi masyarakat.\nMembantu memberdayakan masyarakat melalui program kerja yang berkelanjutan.\nMengembangkan kepribadian, kemandirian, dan kepedulian sosial mahasiswa.\nMeningkatkan kerja sama antara perguruan tinggi dengan masyarakat dan pemerintah padukuhan.',
   about_sasaran: 'Warga Padukuhan Dongkelan, termasuk anak-anak, remaja, ibu-ibu PKK, dan pelaku UMKM.',
   about_kelompok: 'Kelompok KKN Dongkelan Nalarasa terdiri atas sembilan mahasiswa dari berbagai program studi di Universitas Negeri Yogyakarta. Nama "Nalarasa" mencerminkan semangat kebersamaan dan keceriaan kelompok dalam menjalani pengabdian bersama warga Dusun Dongkelan.',
@@ -172,10 +172,10 @@ async function seedSettings() {
 async function seedGallery() {
   if ((await get('SELECT COUNT(*) AS c FROM gallery')).c > 0) return;
   await run('INSERT INTO gallery (judul, keterangan, file, tanggal, kegiatan, urutan) VALUES (?,?,?,?,?,?)',
-    ['Foto Bersama Kelompok KKN Dongkelan Asoy', 'Kebersamaan kelompok KKN Dongkelan Asoy.', '/img/foto-bersama.jpg', '', 'Kebersamaan Kelompok', 1]);
+    ['Foto Bersama Kelompok KKN Dongkelan Nalarasa', 'Kebersamaan kelompok KKN Dongkelan Nalarasa.', '/img/foto-bersama.jpg', '', 'Kebersamaan Kelompok', 1]);
   for (let i = 1; i <= 18; i++) {
     await run('INSERT INTO gallery (judul, keterangan, file, tanggal, kegiatan, urutan) VALUES (?,?,?,?,?,?)',
-      [`Kartu Peserta KKN ${Math.ceil(i / 2)}`, 'Dokumen kartu identitas peserta KKN Dongkelan Asoy.', `/img/kartu/${i}.png`, '', 'Identitas Peserta', 10 + i]);
+      [`Kartu Peserta KKN ${Math.ceil(i / 2)}`, 'Dokumen kartu identitas peserta KKN Dongkelan Nalarasa.', `/img/kartu/${i}.png`, '', 'Identitas Peserta', 10 + i]);
   }
 }
 
