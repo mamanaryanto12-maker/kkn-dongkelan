@@ -1,0 +1,47 @@
+<%- include('partials/head', { title, nav, user, flash, csrfToken, currentPath }) %>
+<%
+  var isEdit = !!agenda;
+  var action = isEdit ? '/admin/agenda/' + agenda.id : '/admin/agenda';
+  var a = agenda || { judul:'', program_id:'', tanggal_mulai:'', tanggal_selesai:'', waktu:'', lokasi:'', kategori:'Program Kelompok', deskripsi:'', status:'Rencana' };
+  var statuses = ['Rencana', 'Berjalan', 'Selesai', 'Batal'];
+  var kategoris = ['Program Kelompok', 'Program Individu', 'Persiapan', 'Monitoring', 'Lainnya'];
+%>
+
+<section class="admin-section">
+  <div class="panel">
+    <div class="panel-head"><h2><%= isEdit ? 'Ubah Agenda' : 'Tambah Agenda' %></h2><a href="/admin/agenda">&larr; Kembali</a></div>
+    <form action="<%= action %>" method="post" class="form-grid">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+      <label class="field span-2"><span>Judul Kegiatan *</span><input type="text" name="judul" value="<%= a.judul %>" required></label>
+      <label class="field"><span>Tanggal Mulai *</span><input type="date" name="tanggal_mulai" value="<%= a.tanggal_mulai %>" required></label>
+      <label class="field"><span>Tanggal Selesai</span><input type="date" name="tanggal_selesai" value="<%= a.tanggal_selesai %>"><small class="muted">Kosongkan bila kegiatan satu hari.</small></label>
+      <label class="field"><span>Waktu</span><input type="text" name="waktu" value="<%= a.waktu %>" placeholder="Contoh: 08.00 - 11.00 WIB"></label>
+      <label class="field"><span>Lokasi</span><input type="text" name="lokasi" value="<%= a.lokasi %>"></label>
+      <label class="field"><span>Kategori</span>
+        <select name="kategori">
+          <% kategoris.forEach(function (k) { %><option value="<%= k %>" <%= a.kategori === k ? 'selected' : '' %>><%= k %></option><% }); %>
+        </select>
+      </label>
+      <label class="field"><span>Status</span>
+        <select name="status">
+          <% statuses.forEach(function (s) { %><option value="<%= s %>" <%= a.status === s ? 'selected' : '' %>><%= s %></option><% }); %>
+        </select>
+      </label>
+      <label class="field span-2"><span>Kaitkan dengan Program Kerja</span>
+        <select name="program_id">
+          <option value="">— Tidak dikaitkan —</option>
+          <% programs.forEach(function (p) { %><option value="<%= p.id %>" <%= Number(a.program_id) === p.id ? 'selected' : '' %>><%= p.nama %></option><% }); %>
+        </select>
+      </label>
+      <label class="field span-2"><span>Deskripsi Kegiatan</span><textarea name="deskripsi" rows="3"><%= a.deskripsi %></textarea></label>
+
+      <div class="form-actions span-2">
+        <button class="btn btn-solid" type="submit"><%= isEdit ? 'Simpan Perubahan' : 'Simpan Agenda' %></button>
+        <a class="btn btn-ghost" href="/admin/agenda">Batal</a>
+      </div>
+    </form>
+  </div>
+</section>
+
+<%- include('partials/foot') %>

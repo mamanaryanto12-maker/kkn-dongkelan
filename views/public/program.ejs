@@ -1,0 +1,69 @@
+<%- include('../partials/header', { title, settings, nav, currentPath }) %>
+
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">Matriks Kegiatan</p>
+    <h1>Program Kerja</h1>
+    <p class="lede">Seluruh program kerja kelompok dan individu yang disusun berdasarkan matriks KKN <%= settings.site_short %>.</p>
+    <div class="filter-bar" role="group" aria-label="Saring program kerja">
+      <button class="filter-btn is-active" data-target="semua">Semua (<%= programs.length %>)</button>
+      <button class="filter-btn" data-target="kelompok">Program Kelompok (<%= grouped.kelompok.length %>)</button>
+      <button class="filter-btn" data-target="individu">Program Individu (<%= grouped.individu.length %>)</button>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="program-column" data-group="kelompok">
+      <h2 class="group-title">Program Kelompok</h2>
+      <% kategoriKelompok.forEach(function (kat) { %>
+        <div class="category-block reveal">
+          <h3 class="category-title"><%= kat %></h3>
+          <div class="program-list">
+            <% grouped.kelompok.filter(function (p) { return p.kategori === kat; }).forEach(function (p) { %>
+              <article class="program-row">
+                <div class="program-row-head">
+                  <h4><%= p.nama %></h4>
+                  <span class="status status-<%= statusMeta(p.status).key %>"><%= statusMeta(p.status).label %></span>
+                </div>
+                <% if (p.deskripsi) { %><p><%= p.deskripsi %></p><% } %>
+                <dl class="program-info">
+                  <% if (p.sasaran) { %><div><dt>Sasaran</dt><dd><%= p.sasaran %></dd></div><% } %>
+                  <% if (p.lokasi) { %><div><dt>Lokasi</dt><dd><%= p.lokasi %></dd></div><% } %>
+                  <% if (p.penanggung_jawab) { %><div><dt>Penanggung Jawab</dt><dd><%= p.penanggung_jawab %></dd></div><% } %>
+                </dl>
+              </article>
+            <% }); %>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+
+    <div class="program-column" data-group="individu">
+      <h2 class="group-title">Program Individu</h2>
+      <% kategoriIndividu.forEach(function (kat) { %>
+        <div class="category-block reveal">
+          <h3 class="category-title"><%= kat %></h3>
+          <div class="program-list">
+            <% grouped.individu.filter(function (p) { return p.kategori === kat; }).forEach(function (p) { %>
+              <article class="program-row">
+                <div class="program-row-head">
+                  <h4><%= p.nama %></h4>
+                  <span class="status status-<%= statusMeta(p.status).key %>"><%= statusMeta(p.status).label %></span>
+                </div>
+                <% if (p.deskripsi) { %><p><%= p.deskripsi %></p><% } %>
+                <dl class="program-info">
+                  <% if (p.sasaran) { %><div><dt>Sasaran</dt><dd><%= p.sasaran %></dd></div><% } %>
+                  <% if (p.lokasi) { %><div><dt>Lokasi</dt><dd><%= p.lokasi %></dd></div><% } %>
+                </dl>
+              </article>
+            <% }); %>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer', { settings }) %>

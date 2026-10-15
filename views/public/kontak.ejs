@@ -1,0 +1,76 @@
+<%- include('../partials/header', { title, settings, nav, currentPath }) %>
+
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">Informasi</p>
+    <h1>Informasi &amp; Kontak</h1>
+    <p class="lede">Hubungi kelompok KKN <%= settings.site_short %> atau kunjungi lokasi pengabdian di <%= settings.lokasi_singkat %>.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap contact-grid">
+    <div class="contact-info reveal">
+      <h2>Kontak Kelompok</h2>
+      <ul class="contact-list">
+        <% if (settings.kontak_email) { %>
+          <li>
+            <span class="contact-label">Email</span>
+            <a href="mailto:<%= settings.kontak_email %>"><%= settings.kontak_email %></a>
+          </li>
+        <% } %>
+        <% if (settings.kontak_whatsapp) { %>
+          <li>
+            <span class="contact-label">WhatsApp</span>
+            <a href="https://wa.me/<%= settings.kontak_whatsapp %>" target="_blank" rel="noopener">+<%= settings.kontak_whatsapp %></a>
+          </li>
+        <% } %>
+        <% if (settings.kontak_instagram) { %>
+          <li>
+            <span class="contact-label">Instagram</span>
+            <a href="https://instagram.com/<%= settings.kontak_instagram %>" target="_blank" rel="noopener">@<%= settings.kontak_instagram %></a>
+          </li>
+        <% } %>
+        <li>
+          <span class="contact-label">Alamat</span>
+          <span><%= settings.lokasi %></span>
+        </li>
+        <li>
+          <span class="contact-label">Periode</span>
+          <span><%= settings.periode %></span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="map-panel reveal">
+      <h2>Peta Lokasi</h2>
+      <div class="map-frame">
+        <iframe title="Peta lokasi KKN" src="https://maps.google.com/maps?q=<%= encodeURIComponent(settings.maps_query) %>&z=14&output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <a class="btn btn-ghost" href="https://maps.google.com/?q=<%= encodeURIComponent(settings.maps_query) %>" target="_blank" rel="noopener">Buka di Google Maps</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Narahubung</p>
+      <h2>Anggota yang dapat dihubungi</h2>
+    </div>
+    <div class="member-grid compact">
+      <% members.forEach(function (m) { %>
+        <article class="member-card reveal">
+          <%- include('../partials/avatar', { person: m, klass: 'member-photo' }) %>
+          <div class="member-body">
+            <span class="member-role"><%= m.jabatan || 'Anggota' %></span>
+            <h3><%= m.name %></h3>
+          </div>
+        </article>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer', { settings }) %>

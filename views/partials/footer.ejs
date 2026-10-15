@@ -1,0 +1,49 @@
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div class="footer-brand">
+        <img src="<%= settings.logo || '/img/logo.png' %>" alt="Logo <%= settings.site_name %>" class="footer-logo">
+        <div>
+          <strong><%= settings.site_name %></strong>
+          <p><%= settings.unit %></p>
+        </div>
+      </div>
+
+      <nav class="footer-col" aria-label="Tautan situs">
+        <h4>Jelajahi</h4>
+        <ul>
+          <li><a href="/profil">Profil KKN</a></li>
+          <li><a href="/anggota">Profil Anggota</a></li>
+          <li><a href="/program">Program Kerja</a></li>
+          <li><a href="/dokumentasi">Dokumentasi</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col">
+        <h4>Lokasi Pengabdian</h4>
+        <p><%= settings.lokasi %></p>
+        <p class="footer-muted">Periode: <%= settings.periode %></p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Kontak</h4>
+        <ul>
+          <% if (settings.kontak_email) { %><li><a href="mailto:<%= settings.kontak_email %>"><%= settings.kontak_email %></a></li><% } %>
+          <% if (settings.kontak_whatsapp) { %><li><a href="https://wa.me/<%= settings.kontak_whatsapp %>" target="_blank" rel="noopener">WhatsApp</a></li><% } %>
+          <% if (settings.kontak_instagram) { %><li><a href="https://instagram.com/<%= settings.kontak_instagram %>" target="_blank" rel="noopener">@<%= settings.kontak_instagram %></a></li><% } %>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <p>&copy; <%= new Date().getFullYear() %> <%= settings.site_name %>. <%= settings.footer_text %></p>
+    </div>
+  </footer>
+
+  <button class="to-top" id="toTop" type="button" aria-label="Kembali ke atas">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 5l-7 7 1.4 1.4L11 8.8V19h2V8.8l4.6 4.6L19 12z" fill="currentColor"/></svg>
+  </button>
+
+  <script src="/js/main.js?v=<%= assetV %>" defer></script>
+</body>
+</html>

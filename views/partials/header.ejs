@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %> &middot; <%= settings.site_name %></title>
+  <meta name="description" content="<%= settings.hero_desc %>">
+  <meta name="theme-color" content="#14483C">
+  <link rel="icon" type="image/png" href="/img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css?v=<%= assetV %>">
+  <noscript><style>.reveal,.hero-enter>*,.hero-fig-enter{opacity:1!important;transform:none!important;animation:none!important}</style></noscript>
+</head>
+<body class="site">
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+  <a class="skip-link" href="#konten-utama">Lewati ke konten utama</a>
+
+  <header class="site-header" id="siteHeader">
+    <div class="wrap header-inner">
+      <a class="brand" href="/" aria-label="Beranda <%= settings.site_name %>">
+        <img class="brand-logo" src="<%= settings.logo || '/img/logo.png' %>" alt="Logo <%= settings.site_name %>">
+        <span class="brand-text">
+          <strong><%= settings.site_name %></strong>
+          <small><%= settings.universitas %></small>
+        </span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="primaryNav" aria-label="Buka menu navigasi">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="primary-nav" id="primaryNav" aria-label="Navigasi utama">
+        <ul>
+          <li><a href="/" class="<%= nav === 'home' ? 'is-active' : '' %>">Beranda</a></li>
+          <li><a href="/profil" class="<%= nav === 'profil' ? 'is-active' : '' %>">Profil</a></li>
+          <li><a href="/anggota" class="<%= nav === 'anggota' ? 'is-active' : '' %>">Anggota</a></li>
+          <li><a href="/program" class="<%= nav === 'program' ? 'is-active' : '' %>">Program Kerja</a></li>
+          <li><a href="/dokumentasi" class="<%= nav === 'dokumentasi' ? 'is-active' : '' %>">Dokumentasi</a></li>
+          <li><a href="/kontak" class="<%= nav === 'kontak' ? 'is-active' : '' %>">Kontak</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="konten-utama">

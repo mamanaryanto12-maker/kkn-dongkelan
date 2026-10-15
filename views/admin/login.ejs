@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %> &middot; CMS KKN</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="/img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/admin.css?v=<%= assetV %>">
+</head>
+<body class="admin-login-page">
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-brand">
+        <img src="/img/logo.png" alt="Logo KKN">
+        <h1>CMS KKN Dongkelan Asoy</h1>
+        <p>Masuk untuk mengelola konten website.</p>
+      </div>
+      <% if (error) { %><div class="alert alert-error" role="alert"><%= error %></div><% } %>
+      <form action="/admin/login" method="post" class="form">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <label class="field">
+          <span>Nama Pengguna</span>
+          <input type="text" name="username" value="<%= username %>" autocomplete="username" required autofocus>
+        </label>
+        <label class="field">
+          <span>Kata Sandi</span>
+          <input type="password" name="password" autocomplete="current-password" required>
+        </label>
+        <button type="submit" class="btn btn-solid full">Masuk</button>
+      </form>
+      <p class="login-hint">Belum punya akun? Akun administrator dibuat saat pertama kali server dijalankan (lihat berkas <code>data/initial-admin.txt</code> atau keluaran terminal).</p>
+      <a class="login-back" href="/">&larr; Kembali ke website</a>
+    </div>
+  </div>
+</body>
+</html>

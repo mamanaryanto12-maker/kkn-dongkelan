@@ -1,0 +1,38 @@
+<%- include('partials/head', { title, nav, user, flash, csrfToken, currentPath }) %>
+
+<section class="admin-section">
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Daftar Agenda (<%= agendas.length %>)</h2>
+      <a class="btn btn-solid" href="/admin/agenda/baru">+ Tambah Agenda</a>
+    </div>
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr><th>Kegiatan</th><th>Mulai</th><th>Selesai</th><th>Kategori</th><th>Status</th><th style="width:150px">Aksi</th></tr>
+        </thead>
+        <tbody>
+          <% if (!agendas.length) { %><tr><td colspan="6" class="muted">Belum ada agenda.</td></tr><% } %>
+          <% agendas.forEach(function (a) { %>
+            <tr>
+              <td><strong><%= a.judul %></strong><% if (a.program_nama) { %><br><small class="muted">Program: <%= a.program_nama %></small><% } %></td>
+              <td><%= a.tanggal_mulai %></td>
+              <td><%= a.tanggal_selesai || '-' %></td>
+              <td><%= a.kategori || '-' %></td>
+              <td><span class="status status-<%= statusMeta(a.status).key %>"><%= statusMeta(a.status).label %></span></td>
+              <td class="actions">
+                <a class="btn btn-sm" href="/admin/agenda/<%= a.id %>/ubah">Ubah</a>
+                <form action="/admin/agenda/<%= a.id %>/hapus" method="post" class="inline" data-confirm="Hapus agenda '<%= a.judul %>'?">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button class="btn btn-sm btn-danger" type="submit">Hapus</button>
+                </form>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/foot') %>

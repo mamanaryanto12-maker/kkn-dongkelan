@@ -1,0 +1,25 @@
+# Blueprint Render: https://render.com/docs/blueprint-spec
+# Deploy dengan disk permanen agar database SQLite & foto unggahan bertahan.
+services:
+  - type: web
+    name: kkn-dongkelan
+    runtime: docker
+    plan: starter
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /var/data
+      - key: UPLOAD_DIR
+        value: /var/data/uploads
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        sync: false
+    disk:
+      name: kkn-data
+      mountPath: /var/data
+      sizeGB: 1

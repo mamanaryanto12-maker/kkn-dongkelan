@@ -1,0 +1,30 @@
+<%- include('../partials/header', { title, settings, nav, currentPath }) %>
+
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">Struktur Kelompok</p>
+    <h1>Profil Anggota</h1>
+    <p class="lede">Sembilan mahasiswa Universitas Negeri Yogyakarta yang tergabung dalam kelompok <%= settings.site_short %>.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap member-grid">
+    <% members.forEach(function (m) { %>
+      <article class="member-card reveal">
+        <a class="member-photo-link" href="/anggota/<%= m.id %>">
+          <%- include('../partials/avatar', { person: m, klass: 'member-photo' }) %>
+        </a>
+        <div class="member-body">
+          <span class="member-role"><%= m.jabatan || 'Anggota' %></span>
+          <h3><a href="/anggota/<%= m.id %>"><%= m.name %></a></h3>
+          <% if (m.nim) { %><p class="member-nim">NIM <%= m.nim %></p><% } %>
+          <% if (m.prodi) { %><p class="member-prodi"><%= m.prodi %></p><% } %>
+          <% if (m.fakultas) { %><p class="member-fak"><%= m.fakultas %></p><% } %>
+        </div>
+      </article>
+    <% }); %>
+  </div>
+</section>
+
+<%- include('../partials/footer', { settings }) %>

@@ -1,0 +1,51 @@
+<%- include('../partials/header', { title, settings, nav, currentPath }) %>
+
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">Galeri</p>
+    <h1>Dokumentasi Kegiatan</h1>
+    <p class="lede">Foto dan dokumen kegiatan KKN <%= settings.site_short %> di <%= settings.lokasi_singkat %>.</p>
+    <% if (kegiatan.length) { %>
+      <div class="filter-bar" role="group" aria-label="Saring dokumentasi">
+        <button class="filter-btn is-active" data-target="semua">Semua (<%= galeri.length %>)</button>
+        <% kegiatan.forEach(function (k) { %>
+          <button class="filter-btn" data-target="<%= k %>"><%= k %></button>
+        <% }); %>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap gallery-grid" id="galleryGrid">
+    <% if (galeri.length === 0) { %>
+      <p class="muted">Belum ada dokumentasi. Silakan tambahkan melalui CMS.</p>
+    <% } %>
+    <% galeri.forEach(function (g) { %>
+      <figure class="gallery-item reveal" data-kegiatan="<%= g.kegiatan || '' %>">
+        <button class="gallery-thumb" type="button" data-full="<%= g.file %>" data-title="<%= g.judul %>" data-caption="<%= g.keterangan || '' %>">
+          <img src="<%= g.file %>" alt="<%= g.judul %>" loading="lazy">
+          <span class="gallery-zoom" aria-hidden="true">＋</span>
+        </button>
+        <figcaption>
+          <strong><%= g.judul %></strong>
+          <% if (g.keterangan) { %><span><%= g.keterangan %></span><% } %>
+          <% if (g.tanggal) { %><time><%= formatTanggal(g.tanggal) %></time><% } %>
+        </figcaption>
+      </figure>
+    <% }); %>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lightbox-close" id="lightboxClose" aria-label="Tutup">&times;</button>
+  <figure>
+    <img id="lightboxImg" src="" alt="">
+    <figcaption>
+      <strong id="lightboxTitle"></strong>
+      <span id="lightboxCaption"></span>
+    </figcaption>
+  </figure>
+</div>
+
+<%- include('../partials/footer', { settings }) %>

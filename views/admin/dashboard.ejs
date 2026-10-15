@@ -1,0 +1,92 @@
+<%- include('partials/head', { title, nav, user, flash, csrfToken, currentPath }) %>
+
+<section class="admin-section">
+  <div class="dash-cards">
+    <a class="dash-card" href="/admin/anggota">
+      <span class="dash-num"><%= counts.members %></span>
+      <span class="dash-label">Anggota</span>
+    </a>
+    <a class="dash-card" href="/admin/program">
+      <span class="dash-num"><%= counts.programs %></span>
+      <span class="dash-label">Program Kerja</span>
+    </a>
+    <a class="dash-card" href="/admin/agenda">
+      <span class="dash-num"><%= counts.agendas %></span>
+      <span class="dash-label">Agenda Kegiatan</span>
+    </a>
+    <a class="dash-card" href="/admin/dokumentasi">
+      <span class="dash-num"><%= counts.gallery %></span>
+      <span class="dash-label">Dokumentasi</span>
+    </a>
+  </div>
+</section>
+
+<div class="admin-grid-2">
+  <section class="admin-section">
+    <div class="panel">
+      <div class="panel-head"><h2>Agenda Terdekat</h2><a href="/admin/agenda">Kelola &rarr;</a></div>
+      <ul class="mini-list">
+        <% if (!upcoming.length) { %><li class="muted">Belum ada agenda terjadwal.</li><% } %>
+        <% upcoming.forEach(function (a) { %>
+          <li>
+            <div>
+              <strong><%= a.judul %></strong>
+              <span class="muted"><%= a.tanggal_mulai %></span>
+            </div>
+            <span class="status status-<%= statusMeta(a.status).key %>"><%= statusMeta(a.status).label %></span>
+          </li>
+        <% }); %>
+      </ul>
+    </div>
+  </section>
+
+  <section class="admin-section">
+    <div class="panel">
+      <div class="panel-head"><h2>Ringkasan Program</h2><a href="/admin/program">Kelola &rarr;</a></div>
+      <div class="summary-block">
+        <h3>Berdasarkan Tipe</h3>
+        <ul class="bar-list">
+          <% byTipe.forEach(function (t) { %>
+            <li><span><%= t.tipe %></span><span class="muted"><%= t.c %> program</span></li>
+          <% }); %>
+        </ul>
+        <h3>Berdasarkan Status</h3>
+        <ul class="bar-list">
+          <% byStatus.forEach(function (s) { %>
+            <li><span class="status status-<%= statusMeta(s.status).key %>"><%= statusMeta(s.status).label %></span><span class="muted"><%= s.c %></span></li>
+          <% }); %>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="admin-section">
+  <div class="panel">
+    <div class="panel-head"><h2>Dokumentasi Terbaru</h2><a href="/admin/dokumentasi">Kelola &rarr;</a></div>
+    <div class="thumb-grid">
+      <% if (!recentGallery.length) { %><p class="muted">Belum ada dokumentasi.</p><% } %>
+      <% recentGallery.forEach(function (g) { %>
+        <figure class="thumb">
+          <img src="<%= g.file %>" alt="<%= g.judul %>" loading="lazy">
+          <figcaption><%= g.judul %></figcaption>
+        </figure>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<section class="admin-section">
+  <div class="panel panel-tips">
+    <h2>Panduan Singkat</h2>
+    <ol class="tips-list">
+      <li>Kelola <strong>Anggota</strong> untuk memperbarui profil, jabatan, dan foto anggota kelompok.</li>
+      <li>Perbarui <strong>Program Kerja</strong> beserta status pelaksanaannya agar halaman publik selalu sinkron.</li>
+      <li>Atur <strong>Agenda</strong> kegiatan pada menu Agenda &amp; Kalender (hanya untuk internal anggota kelompok).</li>
+      <li>Unggah foto kegiatan melalui menu <strong>Dokumentasi</strong>.</li>
+      <li>Sunting teks beranda, profil, dan kontak melalui menu <strong>Konten Halaman</strong>.</li>
+    </ol>
+  </div>
+</section>
+
+<%- include('partials/foot') %>

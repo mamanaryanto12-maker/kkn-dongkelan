@@ -1,0 +1,14 @@
+<%- include('partials/head', { title, nav, user, flash, csrfToken, currentPath }) %>
+
+<section class="admin-section">
+  <div class="panel panel-center">
+    <p class="admin-404-code">404</p>
+    <h2>Halaman tidak ditemukan</h2>
+    <p class="muted">Data yang Anda cari tidak ada atau telah dihapus.</p>
+    <div class="form-actions center">
+      <a class="btn btn-solid" href="/admin">Kembali ke Dasbor</a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/foot') %>

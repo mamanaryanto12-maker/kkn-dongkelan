@@ -1,0 +1,58 @@
+<%- include('../partials/header', { title, settings, nav, currentPath }) %>
+
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">Profil Kegiatan</p>
+    <h1>Tentang KKN <%= settings.site_short %></h1>
+    <p class="lede"><%= settings.tagline %> di <%= settings.lokasi_singkat %>.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap two-col two-col-narrow">
+    <div class="reveal">
+      <h2>Latar Belakang</h2>
+      <% settings.about_latar.split('\n\n').forEach(function (par) { %>
+        <p><%= par %></p>
+      <% }); %>
+
+      <h2>Tujuan Kegiatan</h2>
+      <ul class="tick-list">
+        <% settings.about_tujuan.split('\n').filter(function (l) { return l.trim(); }).forEach(function (t) { %>
+          <li><%= t %></li>
+        <% }); %>
+      </ul>
+
+      <% if (settings.about_kelompok) { %>
+        <h2>Tentang Kelompok</h2>
+        <p><%= settings.about_kelompok %></p>
+      <% } %>
+    </div>
+
+    <aside class="info-card reveal">
+      <h3>Informasi Pelaksanaan</h3>
+      <dl class="fact-list">
+        <div><dt>Kelompok</dt><dd><%= settings.site_name %></dd></div>
+        <div><dt>Perguruan Tinggi</dt><dd><%= settings.universitas %></dd></div>
+        <div><dt>Lokasi</dt><dd><%= settings.lokasi %></dd></div>
+        <div><dt>Periode</dt><dd><%= settings.periode %></dd></div>
+        <div><dt>Sasaran</dt><dd><%= settings.about_sasaran %></dd></div>
+      </dl>
+      <a class="btn btn-solid full" href="/program">Lihat Program Kerja</a>
+      <a class="btn btn-outline full" href="/anggota">Kenali Anggota Kelompok</a>
+    </aside>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="wrap center reveal">
+    <p class="eyebrow">Peta Lokasi</p>
+    <h2><%= settings.lokasi_singkat %></h2>
+    <div class="map-frame wide">
+      <iframe title="Peta lokasi KKN" src="https://maps.google.com/maps?q=<%= encodeURIComponent(settings.maps_query) %>&z=14&output=embed"
+        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer', { settings }) %>

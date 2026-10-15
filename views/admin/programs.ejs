@@ -1,0 +1,38 @@
+<%- include('partials/head', { title, nav, user, flash, csrfToken, currentPath }) %>
+
+<section class="admin-section">
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Daftar Program Kerja (<%= programs.length %>)</h2>
+      <a class="btn btn-solid" href="/admin/program/baru">+ Tambah Program</a>
+    </div>
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr><th style="width:50px">No</th><th>Nama Program</th><th>Tipe</th><th>Kategori</th><th>Status</th><th style="width:150px">Aksi</th></tr>
+        </thead>
+        <tbody>
+          <% if (!programs.length) { %><tr><td colspan="6" class="muted">Belum ada program kerja.</td></tr><% } %>
+          <% programs.forEach(function (p, i) { %>
+            <tr>
+              <td><%= i + 1 %></td>
+              <td><strong><%= p.nama %></strong><% if (p.deskripsi) { %><br><small class="muted"><%= p.deskripsi.slice(0, 90) %><%= p.deskripsi.length > 90 ? '…' : '' %></small><% } %></td>
+              <td><span class="chip chip-<%= p.tipe === 'Individu' ? 'individu' : 'kelompok' %>"><%= p.tipe %></span></td>
+              <td><%= p.kategori || '-' %></td>
+              <td><span class="status status-<%= statusMeta(p.status).key %>"><%= statusMeta(p.status).label %></span></td>
+              <td class="actions">
+                <a class="btn btn-sm" href="/admin/program/<%= p.id %>/ubah">Ubah</a>
+                <form action="/admin/program/<%= p.id %>/hapus" method="post" class="inline" data-confirm="Hapus program '<%= p.nama %>'?">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button class="btn btn-sm btn-danger" type="submit">Hapus</button>
+                </form>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/foot') %>

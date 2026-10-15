@@ -1,0 +1,42 @@
+<%- include('partials/head', { title, nav, user, flash, csrfToken, currentPath }) %>
+<%
+  var isEdit = !!member;
+  var action = isEdit ? '/admin/anggota/' + member.id : '/admin/anggota';
+  var m = member || { name:'', nim:'', prodi:'', fakultas:'', jabatan:'', foto:'', bio:'', instagram:'', urutan:0 };
+%>
+
+<section class="admin-section">
+  <div class="panel">
+    <div class="panel-head"><h2><%= isEdit ? 'Ubah Anggota' : 'Tambah Anggota' %></h2><a href="/admin/anggota">&larr; Kembali</a></div>
+    <form action="<%= action %>?_csrf=<%= csrfToken %>" method="post" enctype="multipart/form-data" class="form-grid">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+      <label class="field"><span>Nama Lengkap *</span><input type="text" name="name" value="<%= m.name %>" required></label>
+      <label class="field"><span>NIM</span><input type="text" name="nim" value="<%= m.nim %>"></label>
+      <label class="field"><span>Program Studi</span><input type="text" name="prodi" value="<%= m.prodi %>"></label>
+      <label class="field"><span>Fakultas / Unit</span><input type="text" name="fakultas" value="<%= m.fakultas %>"></label>
+      <label class="field"><span>Jabatan / Peran</span><input type="text" name="jabatan" value="<%= m.jabatan %>" placeholder="Ketua, Sekretaris, PDD, dst."></label>
+      <label class="field"><span>Instagram (tanpa @)</span><input type="text" name="instagram" value="<%= m.instagram %>"></label>
+      <label class="field"><span>Urutan Tampil</span><input type="number" name="urutan" value="<%= m.urutan %>" min="0"></label>
+      <label class="field"><span>Foto / URL Foto</span><input type="file" name="foto" accept="image/*">
+        <small class="muted">Atau isi tautan gambar langsung:</small>
+        <input type="text" name="foto_url" value="<%= m.foto && m.foto.indexOf('http') === 0 ? m.foto : '' %>" placeholder="https://...">
+      </label>
+      <% if (m.foto) { %>
+        <div class="field current-media">
+          <span>Foto saat ini</span>
+          <img src="<%= m.foto %>" alt="Foto <%= m.name %>">
+          <label class="check"><input type="checkbox" name="hapus_foto" value="1"> Hapus foto ini</label>
+        </div>
+      <% } %>
+      <label class="field span-2"><span>Biodata Singkat</span><textarea name="bio" rows="4" placeholder="Deskripsi diri, minat, atau tanggung jawab dalam kelompok."><%= m.bio %></textarea></label>
+
+      <div class="form-actions span-2">
+        <button class="btn btn-solid" type="submit"><%= isEdit ? 'Simpan Perubahan' : 'Simpan Anggota' %></button>
+        <a class="btn btn-ghost" href="/admin/anggota">Batal</a>
+      </div>
+    </form>
+  </div>
+</section>
+
+<%- include('partials/foot') %>

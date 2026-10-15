@@ -1,0 +1,41 @@
+<%- include('partials/head', { title, nav, user, flash, csrfToken, currentPath }) %>
+
+<section class="admin-section">
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Daftar Anggota (<%= members.length %>)</h2>
+      <a class="btn btn-solid" href="/admin/anggota/baru">+ Tambah Anggota</a>
+    </div>
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr><th style="width:60px">Foto</th><th>Nama</th><th>NIM</th><th>Program Studi</th><th>Jabatan</th><th style="width:150px">Aksi</th></tr>
+        </thead>
+        <tbody>
+          <% if (!members.length) { %><tr><td colspan="6" class="muted">Belum ada data anggota.</td></tr><% } %>
+          <% members.forEach(function (m) { %>
+            <tr>
+              <td>
+                <% if (m.foto) { %><img class="cell-thumb" src="<%= m.foto %>" alt="<%= m.name %>"><% }
+                   else { %><span class="cell-thumb cell-avatar"><%= initials(m.name) %></span><% } %>
+              </td>
+              <td><strong><%= m.name %></strong></td>
+              <td><%= m.nim || '-' %></td>
+              <td><%= m.prodi || '-' %></td>
+              <td><%= m.jabatan || '-' %></td>
+              <td class="actions">
+                <a class="btn btn-sm" href="/admin/anggota/<%= m.id %>/ubah">Ubah</a>
+                <form action="/admin/anggota/<%= m.id %>/hapus" method="post" class="inline" data-confirm="Hapus anggota <%= m.name %>?">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button class="btn btn-sm btn-danger" type="submit">Hapus</button>
+                </form>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/foot') %>

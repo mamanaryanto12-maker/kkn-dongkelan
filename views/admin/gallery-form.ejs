@@ -1,0 +1,39 @@
+<%- include('partials/head', { title, nav, user, flash, csrfToken, currentPath }) %>
+<%
+  var isEdit = !!item;
+  var action = isEdit ? '/admin/dokumentasi/' + item.id : '/admin/dokumentasi';
+  var g = item || { judul:'', keterangan:'', file:'', tanggal:'', kegiatan:'', urutan:0 };
+%>
+
+<section class="admin-section">
+  <div class="panel">
+    <div class="panel-head"><h2><%= isEdit ? 'Ubah Dokumentasi' : 'Tambah Dokumentasi' %></h2><a href="/admin/dokumentasi">&larr; Kembali</a></div>
+    <form action="<%= action %>?_csrf=<%= csrfToken %>" method="post" enctype="multipart/form-data" class="form-grid">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+      <label class="field"><span>Judul *</span><input type="text" name="judul" value="<%= g.judul %>" required></label>
+      <label class="field"><span>Tanggal Kegiatan</span><input type="date" name="tanggal" value="<%= g.tanggal %>"></label>
+      <label class="field"><span>Kelompok Kegiatan</span><input type="text" name="kegiatan" value="<%= g.kegiatan %>" placeholder="Contoh: Sosialisasi, Workshop, Bakti Sosial"></label>
+      <label class="field"><span>Urutan Tampil</span><input type="number" name="urutan" value="<%= g.urutan %>" min="0"></label>
+      <label class="field span-2"><span>Keterangan</span><textarea name="keterangan" rows="3"><%= g.keterangan %></textarea></label>
+
+      <label class="field span-2"><span>Berkas Gambar *</span><input type="file" name="file" accept="image/*">
+        <small class="muted">Atau isi tautan gambar langsung:</small>
+        <input type="text" name="file_url" value="<%= g.file && g.file.indexOf('http') === 0 ? g.file : '' %>" placeholder="https://...">
+      </label>
+      <% if (g.file) { %>
+        <div class="field span-2 current-media">
+          <span>Gambar saat ini</span>
+          <img src="<%= g.file %>" alt="<%= g.judul %>">
+        </div>
+      <% } %>
+
+      <div class="form-actions span-2">
+        <button class="btn btn-solid" type="submit"><%= isEdit ? 'Simpan Perubahan' : 'Simpan Dokumentasi' %></button>
+        <a class="btn btn-ghost" href="/admin/dokumentasi">Batal</a>
+      </div>
+    </form>
+  </div>
+</section>
+
+<%- include('partials/foot') %>

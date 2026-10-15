@@ -1,0 +1,8 @@
+node_modules
+data
+public/uploads
+.git
+.gitignore
+.env
+*.log
+npm-debug.log*

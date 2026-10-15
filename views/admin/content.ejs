@@ -1,0 +1,29 @@
+<%- include('partials/head', { title, nav, user, flash, csrfToken, currentPath }) %>
+
+<section class="admin-section">
+  <div class="panel">
+    <div class="panel-head"><h2>Sunting Konten Halaman</h2></div>
+    <p class="muted panel-intro">Perubahan di sini langsung memengaruhi teks pada halaman publik website.</p>
+    <form action="/admin/konten" method="post" class="form">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="content-groups">
+        <% fields.forEach(function (f) { %>
+          <label class="field <%= f.type === 'textarea' ? 'span-2' : '' %>">
+            <span><%= f.label %></span>
+            <% if (f.type === 'textarea') { %>
+              <textarea name="<%= f.key %>" rows="3"><%= values[f.key] || '' %></textarea>
+            <% } else { %>
+              <input type="text" name="<%= f.key %>" value="<%= values[f.key] || '' %>">
+            <% } %>
+          </label>
+        <% }); %>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-solid" type="submit">Simpan Konten</button>
+        <a class="btn btn-ghost" href="/" target="_blank" rel="noopener">Lihat Website</a>
+      </div>
+    </form>
+  </div>
+</section>
+
+<%- include('partials/foot') %>

@@ -1,0 +1,43 @@
+<%- include('partials/head', { title, nav, user, flash, csrfToken, currentPath }) %>
+<%
+  var isEdit = !!program;
+  var action = isEdit ? '/admin/program/' + program.id : '/admin/program';
+  var p = program || { nama:'', tipe:'Kelompok', kategori:'', deskripsi:'', tujuan:'', sasaran:'', lokasi:'', penanggung_jawab:'', status:'Rencana', urutan:0 };
+  var statuses = ['Rencana', 'Berjalan', 'Selesai', 'Batal'];
+%>
+
+<section class="admin-section">
+  <div class="panel">
+    <div class="panel-head"><h2><%= isEdit ? 'Ubah Program Kerja' : 'Tambah Program Kerja' %></h2><a href="/admin/program">&larr; Kembali</a></div>
+    <form action="<%= action %>" method="post" class="form-grid">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+      <label class="field span-2"><span>Nama Program Kerja *</span><input type="text" name="nama" value="<%= p.nama %>" required></label>
+      <label class="field"><span>Tipe</span>
+        <select name="tipe">
+          <option value="Kelompok" <%= p.tipe === 'Kelompok' ? 'selected' : '' %>>Program Kelompok</option>
+          <option value="Individu" <%= p.tipe === 'Individu' ? 'selected' : '' %>>Program Individu</option>
+        </select>
+      </label>
+      <label class="field"><span>Kategori</span><input type="text" name="kategori" value="<%= p.kategori %>" placeholder="Contoh: Kegiatan Lingkungan"></label>
+      <label class="field"><span>Status</span>
+        <select name="status">
+          <% statuses.forEach(function (s) { %><option value="<%= s %>" <%= p.status === s ? 'selected' : '' %>><%= s %></option><% }); %>
+        </select>
+      </label>
+      <label class="field"><span>Urutan Tampil</span><input type="number" name="urutan" value="<%= p.urutan %>" min="0"></label>
+      <label class="field span-2"><span>Deskripsi</span><textarea name="deskripsi" rows="3"><%= p.deskripsi %></textarea></label>
+      <label class="field span-2"><span>Tujuan</span><textarea name="tujuan" rows="2"><%= p.tujuan %></textarea></label>
+      <label class="field"><span>Sasaran / Peserta</span><input type="text" name="sasaran" value="<%= p.sasaran %>"></label>
+      <label class="field"><span>Lokasi Pelaksanaan</span><input type="text" name="lokasi" value="<%= p.lokasi %>"></label>
+      <label class="field"><span>Penanggung Jawab</span><input type="text" name="penanggung_jawab" value="<%= p.penanggung_jawab %>"></label>
+
+      <div class="form-actions span-2">
+        <button class="btn btn-solid" type="submit"><%= isEdit ? 'Simpan Perubahan' : 'Simpan Program' %></button>
+        <a class="btn btn-ghost" href="/admin/program">Batal</a>
+      </div>
+    </form>
+  </div>
+</section>
+
+<%- include('partials/foot') %>

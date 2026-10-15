@@ -1,0 +1,35 @@
+<%- include('partials/head', { title, nav, user, flash, csrfToken, currentPath }) %>
+
+<section class="admin-section">
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Galeri Dokumentasi (<%= gallery.length %>)</h2>
+      <a class="btn btn-solid" href="/admin/dokumentasi/baru">+ Tambah Dokumentasi</a>
+    </div>
+    <% if (!gallery.length) { %>
+      <p class="muted">Belum ada dokumentasi. Tambahkan foto kegiatan pertama Anda.</p>
+    <% } else { %>
+    <div class="gallery-admin-grid">
+      <% gallery.forEach(function (g) { %>
+        <figure class="gallery-admin-item">
+          <img src="<%= g.file %>" alt="<%= g.judul %>" loading="lazy">
+          <figcaption>
+            <strong><%= g.judul %></strong>
+            <% if (g.tanggal) { %><span class="muted"><%= g.tanggal %></span><% } %>
+            <% if (g.kegiatan) { %><span class="chip chip-kegiatan"><%= g.kegiatan %></span><% } %>
+          </figcaption>
+          <div class="gallery-admin-actions">
+            <a class="btn btn-sm" href="/admin/dokumentasi/<%= g.id %>/ubah">Ubah</a>
+            <form action="/admin/dokumentasi/<%= g.id %>/hapus" method="post" class="inline" data-confirm="Hapus dokumentasi '<%= g.judul %>'?">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button class="btn btn-sm btn-danger" type="submit">Hapus</button>
+            </form>
+          </div>
+        </figure>
+      <% }); %>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/foot') %>

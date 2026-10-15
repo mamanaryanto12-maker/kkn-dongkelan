@@ -1,0 +1,148 @@
+<%- include('../partials/header', { title, settings, nav, currentPath }) %>
+
+<section class="hero">
+  <div class="hero-topo" aria-hidden="true" data-parallax="0.10"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy hero-enter">
+      <p class="eyebrow"><%= settings.hero_eyebrow %></p>
+      <h1 class="hero-title"><%= settings.hero_title %></h1>
+      <p class="hero-desc"><%= settings.hero_desc %></p>
+      <div class="hero-actions">
+        <a class="btn btn-solid" href="/program">Jelajahi Program Kerja</a>
+        <a class="btn btn-outline" href="/dokumentasi">Lihat Dokumentasi</a>
+      </div>
+      <dl class="hero-facts">
+        <div><dt>Lokasi</dt><dd><%= settings.lokasi_singkat %></dd></div>
+        <div><dt>Periode</dt><dd><%= settings.periode %></dd></div>
+        <div><dt>Perguruan Tinggi</dt><dd><%= settings.universitas %></dd></div>
+      </dl>
+    </div>
+
+    <figure class="hero-figure hero-fig-enter">
+      <div class="hero-frame">
+        <img src="/img/foto-bersama.jpg" alt="Foto bersama kelompok <%= settings.site_name %>" data-parallax="0.06">
+      </div>
+      <figcaption class="hero-caption">
+        <span class="dot"></span> Kelompok <%= settings.site_short %>
+        <em>Dokumentasi kebersamaan kelompok</em>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="stat-strip">
+  <div class="wrap stat-grid">
+    <div class="stat"><span class="stat-num" data-count="<%= totalProgram %>"><%= totalProgram %></span><span class="stat-label">Program Kerja</span></div>
+    <div class="stat"><span class="stat-num" data-count="<%= totalAgenda %>"><%= totalAgenda %></span><span class="stat-label">Agenda Kegiatan</span></div>
+    <div class="stat"><span class="stat-num" data-count="<%= totalAnggota %>"><%= totalAnggota %></span><span class="stat-label">Anggota Kelompok</span></div>
+    <div class="stat"><span class="stat-num" data-count="2">2</span><span class="stat-label">Rumpun Program</span></div>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Pengabdian<span class="ticker-dot"></span>Dongkelan<span class="ticker-dot"></span>Sidorejo<span class="ticker-dot"></span>Godean<span class="ticker-dot"></span>Universitas Negeri Yogyakarta<span class="ticker-dot"></span></span>
+    <span>Pengabdian<span class="ticker-dot"></span>Dongkelan<span class="ticker-dot"></span>Sidorejo<span class="ticker-dot"></span>Godean<span class="ticker-dot"></span>Universitas Negeri Yogyakarta<span class="ticker-dot"></span></span>
+  </div>
+</div>
+
+<section class="section">
+  <div class="wrap section-head reveal">
+    <p class="eyebrow">Sekilas Kegiatan</p>
+    <h2>Pengabdian yang tumbuh dari kebutuhan warga</h2>
+    <p class="lede">Program KKN disusun bersama masyarakat melalui observasi dan musyawarah, mencakup bidang pendidikan, lingkungan, kesehatan, ekonomi, hingga teknologi informasi.</p>
+  </div>
+  <div class="wrap pillars">
+    <article class="pillar reveal" data-reveal="scale">
+      <h3>Pendidikan &amp; Keagamaan</h3>
+      <p>Pendampingan belajar, TPA, hingga pengenalan sejarah dan literasi digital bagi anak dan warga.</p>
+    </article>
+    <article class="pillar reveal" data-reveal="scale">
+      <h3>Lingkungan &amp; Kesehatan</h3>
+      <p>Pengelolaan sampah, biopori, TOGA, hingga kegiatan senam dan edukasi kesehatan.</p>
+    </article>
+    <article class="pillar reveal" data-reveal="scale">
+      <h3>Ekonomi &amp; Teknologi</h3>
+      <p>Digitalisasi UMKM, pemetaan padukuhan, dan pemasangan lampu jalan otomatis.</p>
+    </article>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="wrap section-head reveal">
+    <p class="eyebrow">Sorotan</p>
+    <h2>Program kerja pilihan</h2>
+    <p class="lede">Sebagian program yang menjadi perhatian kelompok dalam pelaksanaan KKN.</p>
+  </div>
+  <div class="wrap program-grid">
+    <% programHighlights.forEach(function (p) { %>
+      <article class="program-card reveal">
+        <div class="program-meta">
+          <span class="chip chip-<%= p.tipe === 'Individu' ? 'individu' : 'kelompok' %>"><%= p.tipe %></span>
+          <span class="status status-<%= statusMeta(p.status).key %>"><%= statusMeta(p.status).label %></span>
+        </div>
+        <h3><%= p.nama %></h3>
+        <p class="program-kat"><%= p.kategori %></p>
+        <p><%= p.deskripsi %></p>
+        <dl class="program-info">
+          <% if (p.sasaran) { %><div><dt>Sasaran</dt><dd><%= p.sasaran %></dd></div><% } %>
+          <% if (p.lokasi) { %><div><dt>Lokasi</dt><dd><%= p.lokasi %></dd></div><% } %>
+        </dl>
+      </article>
+    <% }); %>
+  </div>
+  <div class="wrap center"><a class="btn btn-outline" href="/program">Lihat seluruh program kerja &rarr;</a></div>
+</section>
+
+<section class="section">
+  <div class="wrap two-col">
+    <div class="reveal">
+      <p class="eyebrow">Agenda Kegiatan</p>
+      <h2>Rencana kegiatan kelompok</h2>
+      <p class="lede">Rangkaian agenda kegiatan KKN Dongkelan Asoy. Jadwal rinci hanya untuk internal anggota kelompok.</p>
+      <ul class="agenda-list">
+        <% if (upcoming.length === 0) { %>
+          <li class="agenda-empty">Belum ada agenda kegiatan.</li>
+        <% } %>
+        <% upcoming.forEach(function (a) { %>
+          <li class="agenda-item">
+            <div class="agenda-body">
+              <strong><%= a.judul %></strong>
+              <span class="agenda-sub"><%= a.kategori || 'Kegiatan' %><% if (a.lokasi) { %> &middot; <%= a.lokasi %><% } %></span>
+            </div>
+            <span class="status status-<%= statusMeta(a.status).key %>"><%= statusMeta(a.status).label %></span>
+          </li>
+        <% }); %>
+      </ul>
+    </div>
+
+    <div class="reveal map-panel">
+      <p class="eyebrow">Lokasi Pengabdian</p>
+      <h3><%= settings.lokasi_singkat %></h3>
+      <p><%= settings.lokasi %></p>
+      <div class="map-frame">
+        <iframe title="Peta lokasi KKN" src="https://maps.google.com/maps?q=<%= encodeURIComponent(settings.maps_query) %>&z=14&output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <a class="btn btn-ghost" href="https://maps.google.com/?q=<%= encodeURIComponent(settings.maps_query) %>" target="_blank" rel="noopener">Buka di Google Maps</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="wrap section-head reveal">
+    <p class="eyebrow">Dokumentasi</p>
+    <h2>Jejak kegiatan</h2>
+    <p class="lede">Kumpulan foto dan dokumen kegiatan KKN Dongkelan Asoy.</p>
+  </div>
+  <div class="wrap gallery-strip">
+    <% galeriSorotan.forEach(function (g) { %>
+      <a class="strip-item reveal" data-reveal="scale" href="/dokumentasi">
+        <img src="<%= g.file %>" alt="<%= g.judul %>" loading="lazy">
+        <span class="strip-cap"><%= g.judul %></span>
+      </a>
+    <% }); %>
+  </div>
+</section>
+
+<%- include('../partials/footer', { settings }) %>

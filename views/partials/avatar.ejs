@@ -1,0 +1,9 @@
+<%
+  const _tone = avatarTone(person.name);
+  const _cls = typeof klass !== 'undefined' && klass ? klass : 'avatar';
+%>
+<% if (person.foto) { %>
+  <img class="<%= _cls %>" src="<%= person.foto %>" alt="Foto <%= person.name %>" loading="lazy">
+<% } else { %>
+  <span class="<%= _cls %> avatar-placeholder" style="background:<%= _tone.bg %>;color:<%= _tone.fg %>" role="img" aria-label="Foto <%= person.name %> belum tersedia"><%= initials(person.name) %></span>
+<% } %>
