@@ -195,11 +195,28 @@ async function main() {
     await seedGallery();
   });
   await ensureAdmin();
+  // Penanda agar cold start berikutnya cukup satu query (hemat di serverless).
+  await run("INSERT INTO settings (key, value) VALUES ('_seed_done', '1') ON CONFLICT(key) DO UPDATE SET value = '1'");
   console.log('Seed selesai.');
   console.log(`  Anggota   : ${(await get('SELECT COUNT(*) AS c FROM members')).c}`);
   console.log(`  Program   : ${(await get('SELECT COUNT(*) AS c FROM programs')).c}`);
   console.log(`  Agenda    : ${(await get('SELECT COUNT(*) AS c FROM agendas')).c}`);
   console.log(`  Dokumentasi: ${(await get('SELECT COUNT(*) AS c FROM gallery')).c}`);
+}
+
+/**
+ * Jalur cepat untuk serverless: bila penanda sudah ada, lewati seluruh proses
+ * seed (hanya satu query). Jika tabel/penanda belum ada, jalankan seed penuh.
+ */
+async function ensureSeed() {
+  try {
+    const done = await get('SELECT value FROM settings WHERE key = ?', ['_seed_done']);
+    if (done && done.value === '1') return false;
+  } catch (_) {
+    // Tabel belum ada (database baru) — lanjut ke seed penuh di bawah.
+  }
+  await main();
+  return true;
 }
 
 if (require.main === module) {
@@ -209,4 +226,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { main, MEMBERS, PROGRAMS, SETTINGS, WEEKS };
+module.exports = { main, ensureSeed, MEMBERS, PROGRAMS, SETTINGS, WEEKS };

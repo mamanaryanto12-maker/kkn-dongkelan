@@ -8,10 +8,12 @@ const {
 
 const router = express.Router();
 
-async function baseLocals(extra = {}) {
-  const settings = await getSettings();
+// Bangun locals dasar. Bila `settings` sudah diambil (mis. lewat Promise.all),
+// gunakan itu agar tidak ada query tambahan yang berurutan.
+async function baseLocals(extra = {}, settings) {
+  const s = settings || (await getSettings());
   return {
-    settings,
+    settings: s,
     nav: 'home',
     currentPath: '',
     formatTanggal,
@@ -29,21 +31,25 @@ function todayISO() {
 
 // ---------- Beranda ----------
 router.get('/', async (req, res) => {
-  const programHighlights = await all(
-    `SELECT * FROM programs WHERE status != 'Batal' ORDER BY urutan ASC LIMIT 6`
-  );
-  const totalProgram = (await get('SELECT COUNT(*) AS c FROM programs')).c;
-  const totalAgenda = (await get('SELECT COUNT(*) AS c FROM agendas')).c;
-  const totalAnggota = (await get('SELECT COUNT(*) AS c FROM members')).c;
-  const upcoming = (await all(
-    `SELECT * FROM agendas WHERE tanggal_selesai >= ? ORDER BY tanggal_mulai ASC LIMIT 4`,
-    [todayISO()]
-  )).map(decorateAgenda);
-  const galeriSorotan = await all('SELECT * FROM gallery ORDER BY urutan ASC LIMIT 4');
+  const today = todayISO();
+  const [programHighlights, totalProgram, totalAgenda, totalAnggota, upcoming, galeriSorotan, settings] = await Promise.all([
+    all(`SELECT * FROM programs WHERE status != 'Batal' ORDER BY urutan ASC LIMIT 6`),
+    get('SELECT COUNT(*) AS c FROM programs'),
+    get('SELECT COUNT(*) AS c FROM agendas'),
+    get('SELECT COUNT(*) AS c FROM members'),
+    all(`SELECT * FROM agendas WHERE tanggal_selesai >= ? ORDER BY tanggal_mulai ASC LIMIT 4`, [today]),
+    all('SELECT * FROM gallery ORDER BY urutan ASC LIMIT 4'),
+    getSettings(),
+  ]);
   res.render('public/home', await baseLocals({
     nav: 'home', currentPath: '/', title: 'Beranda',
-    programHighlights, totalProgram, totalAgenda, totalAnggota, upcoming, galeriSorotan,
-  }));
+    programHighlights,
+    totalProgram: totalProgram.c,
+    totalAgenda: totalAgenda.c,
+    totalAnggota: totalAnggota.c,
+    upcoming: upcoming.map(decorateAgenda),
+    galeriSorotan,
+  }, settings));
 });
 
 // ---------- Profil KKN ----------
@@ -55,24 +61,33 @@ router.get('/profil', async (req, res) => {
 
 // ---------- Struktur & Anggota ----------
 router.get('/anggota', async (req, res) => {
-  const members = await all('SELECT * FROM members ORDER BY urutan ASC, name ASC');
+  const [members, settings] = await Promise.all([
+    all('SELECT * FROM members ORDER BY urutan ASC, name ASC'),
+    getSettings(),
+  ]);
   res.render('public/anggota', await baseLocals({
     nav: 'anggota', currentPath: '/anggota', title: 'Profil Anggota', members,
-  }));
+  }, settings));
 });
 
 router.get('/anggota/:id', async (req, res, next) => {
-  const member = await get('SELECT * FROM members WHERE id = ?', [Number(req.params.id)]);
+  const [member, settings] = await Promise.all([
+    get('SELECT * FROM members WHERE id = ?', [Number(req.params.id)]),
+    getSettings(),
+  ]);
   if (!member) return next();
   const others = await all('SELECT * FROM members WHERE id != ? ORDER BY urutan ASC LIMIT 4', [member.id]);
   res.render('public/anggota-detail', await baseLocals({
     nav: 'anggota', currentPath: '/anggota', title: member.name, member, others,
-  }));
+  }, settings));
 });
 
 // ---------- Program Kerja ----------
 router.get('/program', async (req, res) => {
-  const programs = await all('SELECT * FROM programs ORDER BY urutan ASC, nama ASC');
+  const [programs, settings] = await Promise.all([
+    all('SELECT * FROM programs ORDER BY urutan ASC, nama ASC'),
+    getSettings(),
+  ]);
   const grouped = {
     kelompok: programs.filter((p) => p.tipe === 'Kelompok'),
     individu: programs.filter((p) => p.tipe === 'Individu'),
@@ -82,24 +97,30 @@ router.get('/program', async (req, res) => {
   res.render('public/program', await baseLocals({
     nav: 'program', currentPath: '/program', title: 'Program Kerja',
     programs, grouped, kategoriKelompok, kategoriIndividu,
-  }));
+  }, settings));
 });
 
 // ---------- Dokumentasi ----------
 router.get('/dokumentasi', async (req, res) => {
-  const galeri = await all('SELECT * FROM gallery ORDER BY urutan ASC, id ASC');
+  const [galeri, settings] = await Promise.all([
+    all('SELECT * FROM gallery ORDER BY urutan ASC, id ASC'),
+    getSettings(),
+  ]);
   const kegiatan = [...new Set(galeri.map((g) => g.kegiatan).filter(Boolean))];
   res.render('public/dokumentasi', await baseLocals({
     nav: 'dokumentasi', currentPath: '/dokumentasi', title: 'Dokumentasi Kegiatan', galeri, kegiatan,
-  }));
+  }, settings));
 });
 
 // ---------- Informasi / Kontak ----------
 router.get('/kontak', async (req, res) => {
-  const members = await all('SELECT * FROM members ORDER BY urutan ASC');
+  const [members, settings] = await Promise.all([
+    all('SELECT * FROM members ORDER BY urutan ASC'),
+    getSettings(),
+  ]);
   res.render('public/kontak', await baseLocals({
     nav: 'kontak', currentPath: '/kontak', title: 'Informasi & Kontak', members,
-  }));
+  }, settings));
 });
 
 module.exports = router;

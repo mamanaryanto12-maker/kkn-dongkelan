@@ -61,7 +61,10 @@ function avatarTone(name) {
 async function getSettings() {
   const rows = await all('SELECT key, value FROM settings');
   const out = {};
-  for (const r of rows) out[r.key] = r.value;
+  for (const r of rows) {
+    if (r.key && r.key[0] === '_') continue; // lewati kunci internal (mis. penanda seed)
+    out[r.key] = r.value;
+  }
   return out;
 }
 

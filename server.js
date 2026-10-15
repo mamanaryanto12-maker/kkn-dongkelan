@@ -6,7 +6,6 @@ const crypto = require('crypto');
 const express = require('express');
 const cookieSession = require('cookie-session');
 
-const db = require('./src/db'); // lapisan database (async)
 const { DATA_DIR, UPLOAD_DIR } = require('./src/config');
 const seed = require('./src/seed');
 const { csrfProtection, securityHeaders } = require('./src/middleware/auth');
@@ -19,12 +18,12 @@ const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
 
 // Inisialisasi skema + data awal sekali per proses (aman untuk cold start serverless).
+// Setelah seed pertama, cold start hanya melakukan satu query berkat penanda _seed_done.
 let readyPromise = null;
 function ready() {
   if (!readyPromise) {
     readyPromise = (async () => {
-      await db.init();
-      await seed.main();
+      await seed.ensureSeed();
     })().catch((err) => {
       readyPromise = null; // izinkan percobaan ulang pada request berikutnya
       throw err;
