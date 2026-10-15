@@ -48,6 +48,15 @@ body {
     var(--cream);
   -webkit-font-smoothing: antialiased;
 }
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url(/img/topo.svg) no-repeat center/cover;
+  opacity: .04;
+  pointer-events: none;
+  z-index: -1;
+}
 img { max-width: 100%; display: block; }
 a { color: var(--forest); text-decoration: none; }
 a:hover { color: var(--gold-deep); }
@@ -106,8 +115,8 @@ small { font-size: .82rem; }
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 74px; }
 .brand { display: flex; align-items: center; gap: .8rem; }
 .brand-logo { width: 46px; height: 46px; object-fit: contain; }
-.brand-text { display: flex; flex-direction: column; line-height: 1.15; }
-.brand-text strong { font-family: var(--serif); font-size: 1.06rem; color: var(--forest); }
+.brand-text { display: flex; flex-direction: column; line-height: 1.15; gap: .2rem; }
+.brand-text strong { font-family: var(--serif); font-size: 1.06rem; color: var(--forest); margin-bottom: .2rem; }
 .brand-text small { font-size: .68rem; letter-spacing: .04em; color: var(--muted); text-transform: uppercase; }
 
 .primary-nav { display: flex; align-items: center; gap: 1.4rem; }

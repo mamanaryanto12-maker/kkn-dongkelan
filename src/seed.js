@@ -91,8 +91,8 @@ const PROGRAMS = [
 ];
 
 const SETTINGS = {
-  site_name: 'KKN Dongkelan Asoy',
-  site_short: 'Dongkelan Asoy',
+  site_name: 'KKN Dongkelan Nalarasa',
+  site_short: 'Dongkelan Nalarasa',
   universitas: 'Universitas Negeri Yogyakarta',
   unit: 'Unit KKN, Praktik Kependidikan, Praktik Industri, dan Magang Universitas Negeri Yogyakarta',
   tagline: 'Kolaborasi dan pengabdian di Padukuhan Dongkelan',
@@ -106,7 +106,7 @@ const SETTINGS = {
   about_latar: 'Kuliah Kerja Nyata (KKN) merupakan mata kuliah pengabdian kepada masyarakat yang dilaksanakan mahasiswa Universitas Negeri Yogyakarta. Kegiatan ini menjadi ruang bagi mahasiswa untuk belajar bersama masyarakat, menerapkan ilmu yang dipelajari, serta turut mendukung pembangunan di tingkat padukuhan.\n\nMelalui KKN di Dusun Dongkelan, kelompok Dongkelan Asoy berupaya menghadirkan program yang relevan dengan kebutuhan warga, mulai dari pendidikan, lingkungan, kesehatan, pemberdayaan ekonomi, hingga pemanfaatan teknologi informasi.',
   about_tujuan: 'Menerapkan ilmu dan keterampilan mahasiswa untuk membantu memecahkan permasalahan yang dihadapi masyarakat.\nMembantu memberdayakan masyarakat melalui program kerja yang berkelanjutan.\nMengembangkan kepribadian, kemandirian, dan kepedulian sosial mahasiswa.\nMeningkatkan kerja sama antara perguruan tinggi dengan masyarakat dan pemerintah padukuhan.',
   about_sasaran: 'Warga Padukuhan Dongkelan, termasuk anak-anak, remaja, ibu-ibu PKK, dan pelaku UMKM.',
-  about_kelompok: 'Kelompok KKN Dongkelan Asoy terdiri atas sembilan mahasiswa dari berbagai program studi di Universitas Negeri Yogyakarta. Nama "Asoy" mencerminkan semangat kebersamaan dan keceriaan kelompok dalam menjalani pengabdian bersama warga Dusun Dongkelan.',
+  about_kelompok: 'Kelompok KKN Dongkelan Nalarasa terdiri atas sembilan mahasiswa dari berbagai program studi di Universitas Negeri Yogyakarta. Nama "Nalarasa" mencerminkan semangat kebersamaan dan keceriaan kelompok dalam menjalani pengabdian bersama warga Dusun Dongkelan.',
   kontak_email: 'kkndongkelan@gmail.com',
   kontak_whatsapp: '6283866064905',
   kontak_instagram: 'kkn.dongkelan',
