@@ -34,12 +34,45 @@ document.addEventListener('DOMContentLoaded', function () {
     toggle.addEventListener('click', function () {
       var open = nav.classList.toggle('is-open');
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
     });
     nav.addEventListener('click', function (e) {
       if (e.target.tagName === 'A') {
         nav.classList.remove('is-open');
         toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
       }
+    });
+  }
+
+  /* ---------- Accordion ---------- */
+  var acc = document.getElementById('rumpunAccordion');
+  if (acc) {
+    acc.querySelectorAll('.accordion-item').forEach(function (item) {
+      var btn = item.querySelector('.accordion-header');
+      var panel = item.querySelector('.accordion-panel');
+      if (!btn || !panel) return;
+      btn.addEventListener('click', function () {
+        var isOpen = item.classList.contains('is-open');
+        acc.querySelectorAll('.accordion-item').forEach(function (it) {
+          it.classList.remove('is-open');
+          var b = it.querySelector('.accordion-header');
+          var p = it.querySelector('.accordion-panel');
+          if (b) b.setAttribute('aria-expanded', 'false');
+          if (p) { p.setAttribute('hidden', ''); p.style.height = ''; }
+        });
+        if (!isOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+          panel.removeAttribute('hidden');
+          var h = panel.scrollHeight;
+          panel.style.height = '0px';
+          requestAnimationFrame(function () {
+            panel.style.height = h + 'px';
+            setTimeout(function () { panel.style.height = 'auto'; }, 320);
+          });
+        }
+      });
     });
   }
 
@@ -106,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* ---------- Hero editorial slider ---------- */
+  /* ---------- Hero full slider ---------- */
   var heroSlider = document.querySelector('[data-hero-slider]');
   if (heroSlider && !reduce) {
     var heroTrack = heroSlider.querySelector('[data-hero-track]');
@@ -136,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       function resetHero() {
         if (heroTimer) clearInterval(heroTimer);
-        heroTimer = setInterval(function () { goHero(heroIndex + 1); }, 6200);
+        heroTimer = setInterval(function () { goHero(heroIndex + 1); }, 6800);
       }
       if (heroPrev) heroPrev.addEventListener('click', function () { goHero(heroIndex - 1); });
       if (heroNext) heroNext.addEventListener('click', function () { goHero(heroIndex + 1); });
@@ -144,6 +177,9 @@ document.addEventListener('DOMContentLoaded', function () {
       heroSlider.addEventListener('mouseleave', resetHero);
       resetHero();
     }
+  } else if (heroSlider && reduce) {
+    var heroTrackR = heroSlider.querySelector('[data-hero-track]');
+    if (heroTrackR) heroTrackR.style.transform = 'none';
   }
 
   /* ---------- Dokumentasi editorial carousel ---------- */
