@@ -1,39 +1,37 @@
   </main>
 
   <footer class="site-footer">
-    <div class="wrap footer-grid">
+    <div class="wrap footer-grid footer-grid-3">
       <div class="footer-brand">
-        <img src="<%= settings.logo || '/img/logo.png' %>" alt="Logo KKN Dongkelan Nalarasa" class="footer-logo">
-        <div>
-          <strong>KKN Dongkelan Nalarasa</strong>
-          <p><%= settings.universitas %><br>KKN Reguler Periode <%= settings.periode %></p>
+        <div class="footer-brand-row">
+          <img src="<%= settings.logo || '/img/logo-kkn.png' %>" alt="Logo KKN Dongkelan Nalarasa" onerror="this.style.display='none'">
+          <div>
+            <strong>KKN Dongkelan Nalarasa</strong>
+            <p><%= settings.universitas %></p>
+          </div>
         </div>
+        <p class="footer-desc"><%= settings.footer_text %></p>
       </div>
 
-  <nav class="footer-col" aria-label="Tautan situs">
-    <h4>Jelajahi</h4>
-    <ul>
-      <li><a href="/">Beranda</a></li>
-      <li><a href="/profil">Profil</a></li>
-      <li><a href="/anggota">Anggota</a></li>
-      <li><a href="/program">Program Kerja</a></li>
-      <li><a href="/dokumentasi">Dokumentasi</a></li>
-      <li><a href="/kontak">Kontak</a></li>
-    </ul>
-  </nav>
-
-      <div class="footer-col">
-        <h4>Lokasi Pengabdian</h4>
-        <p><%= settings.lokasi %></p>
-        <p class="footer-muted">Periode: <%= settings.periode %></p>
-      </div>
+      <nav class="footer-col" aria-label="Tautan situs">
+        <h4>Jelajahi</h4>
+        <ul>
+          <li><a href="/">Beranda</a></li>
+          <li><a href="/profil">Profil</a></li>
+          <li><a href="/anggota">Anggota</a></li>
+          <li><a href="/program">Program Kerja</a></li>
+          <li><a href="/dokumentasi">Dokumentasi</a></li>
+          <li><a href="/kontak">Kontak</a></li>
+        </ul>
+      </nav>
 
       <div class="footer-col">
         <h4>Kontak</h4>
-        <ul>
-          <% if (settings.kontak_email) { %><li><a href="mailto:<%= settings.kontak_email %>"><%= settings.kontak_email %></a></li><% } %>
-          <% if (settings.kontak_whatsapp) { %><li><a href="https://wa.me/<%= settings.kontak_whatsapp %>" target="_blank" rel="noopener">WhatsApp</a></li><% } else { %><li><span class="footer-muted">WhatsApp: (belum diisi)</span></li><% } %>
-          <% if (settings.kontak_instagram) { %><li><a href="https://instagram.com/<%= settings.kontak_instagram %>" target="_blank" rel="noopener">@<%= settings.kontak_instagram %></a></li><% } %>
+        <ul class="footer-contact">
+          <% if (settings.lokasi) { %><li><span>Alamat</span><p><%= settings.lokasi %></p></li><% } %>
+          <% if (settings.kontak_email || settings.email) { %><li><span>Email</span><a href="mailto:<%= settings.kontak_email || settings.email %>"><%= settings.kontak_email || settings.email %></a></li><% } %>
+          <% if (settings.kontak_whatsapp) { %><li><span>WhatsApp</span><a href="https://wa.me/<%= settings.kontak_whatsapp.toString().replace(/\D/g,'') %>" target="_blank" rel="noopener"><%= settings.kontak_whatsapp %></a></li><% } else { %><li><span>WhatsApp</span><span class="muted">(belum diisi)</span></li><% } %>
+          <% if (settings.kontak_instagram) { %><li><span>Instagram</span><a href="https://instagram.com/<%= settings.kontak_instagram %>" target="_blank" rel="noopener">@<%= settings.kontak_instagram %></a></li><% } %>
         </ul>
       </div>
     </div>
