@@ -1,32 +1,83 @@
 <%- include('../partials/header', { title, settings, nav, currentPath }) %>
 
 <section class="hero">
-  <div class="hero-topo" aria-hidden="true" data-parallax="0.10"></div>
+  <div class="hero-topo" aria-hidden="true" data-parallax="0.08"></div>
   <div class="wrap hero-grid">
-    <div class="hero-copy hero-enter">
-      <p class="eyebrow"><%= settings.hero_eyebrow %></p>
+    <div class="hero-copy reveal">
+      <div class="hero-kicker">
+        <span class="hero-kicker-dot"></span>
+        <span><%= settings.hero_eyebrow || 'KKN Universitas Negeri Yogyakarta' %></span>
+      </div>
       <h1 class="hero-title"><%= settings.hero_title %></h1>
       <p class="hero-desc"><%= settings.hero_desc %></p>
       <div class="hero-actions">
         <a class="btn btn-solid" href="/program">Jelajahi Program Kerja</a>
         <a class="btn btn-outline" href="/dokumentasi">Lihat Dokumentasi</a>
       </div>
-      <dl class="hero-facts">
-        <div><dt>Lokasi</dt><dd><%= settings.lokasi_singkat %></dd></div>
-        <div><dt>Periode</dt><dd><%= settings.periode %></dd></div>
-        <div><dt>Perguruan Tinggi</dt><dd><%= settings.universitas %></dd></div>
-      </dl>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Lokasi</span>
+          <span class="hero-meta-value"><%= settings.lokasi_singkat %></span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Periode</span>
+          <span class="hero-meta-value"><%= settings.periode %></span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Perguruan Tinggi</span>
+          <span class="hero-meta-value"><%= settings.universitas %></span>
+        </div>
+      </div>
     </div>
 
-    <figure class="hero-figure hero-fig-enter">
-      <div class="hero-frame">
-        <img src="/img/foto-bersama.jpg" alt="Foto bersama kelompok <%= settings.site_name %>" data-parallax="0.06">
+    <div class="hero-media reveal" data-reveal="scale">
+      <div class="hero-slider" data-hero-slider>
+        <div class="hero-slider-track" data-hero-track>
+          <article class="hero-slide is-active">
+            <img src="/img/foto-bersama.jpg" alt="Foto bersama kelompok <%= settings.site_name %>" data-parallax="0.05">
+            <div class="hero-slide-content">
+              <span class="hero-slide-kicker">Editorial Highlight</span>
+              <h3 class="hero-slide-title">Sinergi untuk Desa yang Berdaya</h3>
+              <p>Kolaborasi lintas bidang untuk solusi nyata bersama masyarakat.</p>
+            </div>
+          </article>
+          <% if (galeriSorotan && galeriSorotan[0]) { %>
+            <article class="hero-slide">
+              <img src="<%= galeriSorotan[0].file %>" alt="<%= galeriSorotan[0].judul %>" loading="lazy">
+              <div class="hero-slide-content">
+                <span class="hero-slide-kicker">Dokumentasi Kegiatan</span>
+                <h3 class="hero-slide-title"><%= galeriSorotan[0].judul %></h3>
+                <p><%= galeriSorotan[0].keterangan || 'Jejak pengabdian bersama warga.' %></p>
+              </div>
+            </article>
+          <% } %>
+          <% if (galeriSorotan && galeriSorotan[1]) { %>
+            <article class="hero-slide">
+              <img src="<%= galeriSorotan[1].file %>" alt="<%= galeriSorotan[1].judul %>" loading="lazy">
+              <div class="hero-slide-content">
+                <span class="hero-slide-kicker">Program Unggulan</span>
+                <h3 class="hero-slide-title"><%= galeriSorotan[1].judul %></h3>
+                <p><%= galeriSorotan[1].keterangan || 'Wujud nyata pengabdian untuk masyarakat.' %></p>
+              </div>
+            </article>
+          <% } %>
+        </div>
+        <div class="hero-dots" data-hero-dots></div>
+        <div class="hero-slide-nav">
+          <button class="hero-nav-btn" data-hero-prev aria-label="Slide sebelumnya">←</button>
+          <button class="hero-nav-btn" data-hero-next aria-label="Slide berikutnya">→</button>
+        </div>
       </div>
-      <figcaption class="hero-caption">
-        <span class="dot"></span> Kelompok <%= settings.site_short %>
-        <em>Dokumentasi kebersamaan kelompok</em>
-      </figcaption>
-    </figure>
+      <div class="hero-card reveal">
+        <div class="hero-card-badge">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <div class="hero-card-text">
+          <strong>Pengabdian Berorientasi Kebutuhan Warga</strong>
+          <span>Dirancang bersama masyarakat melalui observasi dan musyawarah.</span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -43,20 +94,31 @@
 
 <section class="section">
   <div class="wrap section-head reveal">
-    <p class="eyebrow">Sekilas Kegiatan</p>
-    <h2>Pengabdian yang tumbuh dari kebutuhan warga</h2>
+    <div>
+      <p class="eyebrow">Sekilas Kegiatan</p>
+      <h2>Pengabdian yang tumbuh dari kebutuhan warga</h2>
+    </div>
     <p class="lede">Program KKN disusun bersama masyarakat melalui observasi dan musyawarah, mencakup bidang pendidikan, lingkungan, kesehatan, ekonomi, hingga teknologi informasi.</p>
   </div>
   <div class="wrap pillars">
     <article class="pillar reveal" data-reveal="scale">
+      <div class="pillar-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3L4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3z" stroke="currentColor" stroke-width="1.6"/></svg>
+      </div>
       <h3>Pendidikan &amp; Keagamaan</h3>
       <p>Pendampingan belajar, TPA, hingga pengenalan sejarah dan literasi digital bagi anak dan warga.</p>
     </article>
     <article class="pillar reveal" data-reveal="scale">
+      <div class="pillar-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 21s-6-4.35-6-10a6 6 0 0112 0c0 5.65-6 10-6 10z" stroke="currentColor" stroke-width="1.6"/></svg>
+      </div>
       <h3>Lingkungan &amp; Kesehatan</h3>
       <p>Pengelolaan sampah, biopori, TOGA, hingga kegiatan senam dan edukasi kesehatan.</p>
     </article>
     <article class="pillar reveal" data-reveal="scale">
+      <div class="pillar-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M4 19V5m0 14h16M8 9h2m4 0h2M8 13h2m4 0h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </div>
       <h3>Ekonomi &amp; Teknologi</h3>
       <p>Digitalisasi UMKM, pemetaan padukuhan, dan pemasangan lampu jalan otomatis.</p>
     </article>
@@ -125,18 +187,51 @@
 </section>
 
 <section class="section section-alt">
-  <div class="wrap section-head reveal">
-    <p class="eyebrow">Dokumentasi</p>
-    <h2>Jejak kegiatan</h2>
-    <p class="lede">Kumpulan foto dan dokumen kegiatan KKN Dongkelan Nalarasa.</p>
-  </div>
-  <div class="wrap gallery-strip">
-    <% galeriSorotan.forEach(function (g) { %>
-      <a class="strip-item reveal" data-reveal="scale" href="/dokumentasi">
-        <img src="<%= g.file %>" alt="<%= g.judul %>" loading="lazy">
-        <span class="strip-cap"><%= g.judul %></span>
-      </a>
-    <% }); %>
+  <div class="wrap gallery-editorial">
+    <div class="gallery-editorial-header reveal">
+      <div>
+        <p class="eyebrow">Dokumentasi</p>
+        <h2>Jejak kegiatan</h2>
+        <p class="lede">Kumpulan foto dan dokumen kegiatan KKN <%= settings.site_short %>.</p>
+      </div>
+      <div class="gallery-editorial-nav">
+        <button class="gallery-editorial-btn" data-gallery-prev aria-label="Geser sebelumnya">←</button>
+        <button class="gallery-editorial-btn" data-gallery-next aria-label="Geser berikutnya">→</button>
+      </div>
+    </div>
+    <div class="gallery-editorial-track-wrap reveal" data-reveal="scale">
+      <div class="gallery-editorial-track" data-gallery-track>
+        <% galeri.forEach(function (g, idx) { %>
+          <article class="gallery-editorial-card">
+            <div class="gallery-editorial-media">
+              <img src="<%= g.file %>" alt="<%= g.judul %>" loading="lazy">
+            </div>
+            <div class="gallery-editorial-body">
+              <div class="gallery-editorial-meta">
+                <% if (g.kegiatan) { %><span class="gallery-editorial-kat"><%= g.kegiatan %></span><% } %>
+                <% if (g.tanggal) { %><span class="gallery-editorial-date"><%= formatTanggal(g.tanggal) %></span><% } %>
+              </div>
+              <h3 class="gallery-editorial-title"><%= g.judul %></h3>
+              <% if (g.keterangan) { %><p class="gallery-editorial-excerpt"><%= g.keterangan %></p><% } %>
+              <a class="gallery-editorial-link" href="/dokumentasi">Lihat dokumentasi <span>→</span></a>
+            </div>
+          </article>
+        <% }); %>
+        <% if (galeri.length === 0) { %>
+          <% galeriSorotan.forEach(function (g) { %>
+            <article class="gallery-editorial-card">
+              <div class="gallery-editorial-media">
+                <img src="<%= g.file %>" alt="<%= g.judul %>" loading="lazy">
+              </div>
+              <div class="gallery-editorial-body">
+                <h3 class="gallery-editorial-title"><%= g.judul %></h3>
+                <a class="gallery-editorial-link" href="/dokumentasi">Lihat dokumentasi <span>→</span></a>
+              </div>
+            </article>
+          <% }); %>
+        <% } %>
+      </div>
+    </div>
   </div>
 </section>
 
