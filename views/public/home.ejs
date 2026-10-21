@@ -157,62 +157,127 @@
 </section>
 
 <section class="section section-alt">
-  <div class="wrap section-head reveal">
-    <p class="eyebrow">Sorotan</p>
-    <h2>Program kerja pilihan</h2>
-    <p class="lede">Sebagian program yang menjadi perhatian kelompok dalam pelaksanaan KKN.</p>
+  <div class="wrap section-head reveal section-head-row">
+    <div>
+      <p class="eyebrow">Program Kerja</p>
+      <h2>Program kerja pilihan</h2>
+      <p class="lede">Sebagian program yang menjadi perhatian kelompok dalam pelaksanaan KKN Dongkelan Nalarasa.</p>
+    </div>
+    <a class="btn btn-outline" href="/program">Lihat seluruh program kerja</a>
   </div>
   <div class="wrap program-grid">
     <% programHighlights.forEach(function (p) { %>
       <article class="program-card reveal">
-        <div class="program-meta">
-          <span class="chip chip-<%= p.tipe === 'Individu' ? 'individu' : 'kelompok' %>"><%= p.tipe %></span>
+        <div class="program-card-top">
+          <span class="chip"><%= p.kategori %></span>
           <span class="status status-<%= statusMeta(p.status).key %>"><%= statusMeta(p.status).label %></span>
         </div>
-        <h3><%= p.nama %></h3>
-        <p class="program-kat"><%= p.kategori %></p>
-        <p><%= p.deskripsi %></p>
-        <dl class="program-info">
-          <% if (p.sasaran) { %><div><dt>Sasaran</dt><dd><%= p.sasaran %></dd></div><% } %>
-          <% if (p.lokasi) { %><div><dt>Lokasi</dt><dd><%= p.lokasi %></dd></div><% } %>
-        </dl>
+        <div class="program-card-body">
+          <h3><%= p.nama %></h3>
+          <p class="program-desc"><%= p.deskripsi %></p>
+        </div>
+        <div class="program-card-meta">
+          <% if (p.sasaran) { %>
+            <div class="meta-item">
+              <span class="meta-label">Sasaran</span>
+              <span class="meta-value"><%= p.sasaran %></span>
+            </div>
+          <% } %>
+          <% if (p.lokasi) { %>
+            <div class="meta-item">
+              <span class="meta-label">Lokasi</span>
+              <span class="meta-value"><%= p.lokasi %></span>
+            </div>
+          <% } %>
+        </div>
       </article>
     <% }); %>
   </div>
-  <div class="wrap center"><a class="btn btn-outline" href="/program">Lihat seluruh program kerja &rarr;</a></div>
 </section>
 
 <section class="section">
-  <div class="wrap two-col">
-    <div class="reveal">
+  <div class="wrap section-head reveal">
+    <div>
       <p class="eyebrow">Agenda Kegiatan</p>
-      <h2>Rencana kegiatan kelompok</h2>
-      <p class="lede">Rangkaian agenda kegiatan KKN Dongkelan Nalarasa. Jadwal rinci hanya untuk internal anggota kelompok.</p>
-      <ul class="agenda-list">
-        <% if (upcoming.length === 0) { %>
-          <li class="agenda-empty">Belum ada agenda kegiatan.</li>
-        <% } %>
-        <% upcoming.forEach(function (a) { %>
-          <li class="agenda-item">
-            <div class="agenda-body">
-              <strong><%= a.judul %></strong>
-              <span class="agenda-sub"><%= a.kategori || 'Kegiatan' %><% if (a.lokasi) { %> &middot; <%= a.lokasi %><% } %></span>
-            </div>
-            <span class="status status-<%= statusMeta(a.status).key %>"><%= statusMeta(a.status).label %></span>
-          </li>
-        <% }); %>
-      </ul>
+      <h2>Agenda kegiatan kelompok</h2>
+      <p class="lede">Rangkaian agenda kegiatan KKN Dongkelan Nalarasa.</p>
     </div>
+  </div>
+  <div class="wrap">
+    <div class="schedule-table-wrap reveal">
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th>Tanggal/Waktu</th>
+            <th>Kegiatan</th>
+            <th>Lokasi</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (upcoming.length === 0) { %>
+            <tr><td colspan="4" class="schedule-empty">Belum ada agenda kegiatan.</td></tr>
+          <% } %>
+          <% upcoming.forEach(function (a) { %>
+            <tr>
+              <td>
+                <div class="schedule-date"><%= a.tanggal_mulai ? formatTanggal(a.tanggal_mulai) : '-' %></div>
+                <% if (a.jam_mulai) { %><div class="schedule-time"><%= a.jam_mulai %><% if (a.jam_selesai) { %> - <%= a.jam_selesai %><% } %></div><% } %>
+              </td>
+              <td>
+                <div class="schedule-title"><%= a.judul %></div>
+                <% if (a.kategori) { %><div class="schedule-sub"><%= a.kategori %></div><% } %>
+              </td>
+              <td><%= a.lokasi || '-' %></td>
+              <td><span class="status status-<%= statusMeta(a.status).key %>"><%= statusMeta(a.status).label %></span></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+    <div class="schedule-cards reveal">
+      <% if (upcoming.length === 0) { %>
+        <div class="schedule-empty-card">Belum ada agenda kegiatan.</div>
+      <% } %>
+      <% upcoming.forEach(function (a) { %>
+        <article class="schedule-card">
+          <div class="schedule-card-row">
+            <span class="schedule-card-label">Tanggal/Waktu</span>
+            <span><%= a.tanggal_mulai ? formatTanggal(a.tanggal_mulai) : '-' %><% if (a.jam_mulai) { %> • <%= a.jam_mulai %><% if (a.jam_selesai) { %> - <%= a.jam_selesai %><% } %><% } %></span>
+          </div>
+          <div class="schedule-card-row">
+            <span class="schedule-card-label">Kegiatan</span>
+            <span><strong><%= a.judul %></strong><% if (a.kategori) { %><br><span class="muted"><%= a.kategori %></span><% } %></span>
+          </div>
+          <div class="schedule-card-row">
+            <span class="schedule-card-label">Lokasi</span>
+            <span><%= a.lokasi || '-' %></span>
+          </div>
+          <div class="schedule-card-row">
+            <span class="schedule-card-label">Status</span>
+            <span class="status status-<%= statusMeta(a.status).key %>"><%= statusMeta(a.status).label %></span>
+          </div>
+        </article>
+      <% }); %>
+    </div>
+  </div>
+</section>
 
-    <div class="reveal map-panel">
+<section class="section section-alt">
+  <div class="wrap location-grid">
+    <div class="reveal">
       <p class="eyebrow">Lokasi Pengabdian</p>
-      <h3><%= settings.lokasi_singkat %></h3>
-      <p><%= settings.lokasi %></p>
+      <h2><%= settings.lokasi_singkat %></h2>
+      <p class="lede"><%= settings.lokasi %></p>
+      <div class="location-actions">
+        <a class="btn btn-solid" href="https://maps.google.com/?q=<%= encodeURIComponent(settings.maps_query) %>" target="_blank" rel="noopener">Buka di Google Maps</a>
+      </div>
+    </div>
+    <div class="reveal map-panel">
       <div class="map-frame">
         <iframe title="Peta lokasi KKN" src="https://maps.google.com/maps?q=<%= encodeURIComponent(settings.maps_query) %>&z=14&output=embed"
           loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
-      <a class="btn btn-ghost" href="https://maps.google.com/?q=<%= encodeURIComponent(settings.maps_query) %>" target="_blank" rel="noopener">Buka di Google Maps</a>
     </div>
   </div>
 </section>
