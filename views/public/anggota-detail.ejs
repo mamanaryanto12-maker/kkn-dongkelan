@@ -5,17 +5,17 @@
     <a class="text-link back-link" href="/anggota">&larr; Kembali ke daftar anggota</a>
     <div class="member-detail">
       <div class="member-detail-photo reveal">
-        <%- include('../partials/avatar', { person: member, klass: 'member-photo-lg' }) %>
+        <%- include('../partials/avatar', { person: member, klass: 'speaker-photo' }) %>
       </div>
       <div class="member-detail-body reveal">
-        <span class="member-role"><%= member.jabatan || 'Anggota' %></span>
+        <p class="eyebrow"><%= member.jabatan || 'Anggota' %></p>
         <h1><%= member.name %></h1>
         <dl class="fact-list">
           <% if (member.nim) { %><div><dt>NIM</dt><dd><%= member.nim %></dd></div><% } %>
           <% if (member.prodi) { %><div><dt>Program Studi</dt><dd><%= member.prodi %></dd></div><% } %>
           <% if (member.fakultas) { %><div><dt>Fakultas</dt><dd><%= member.fakultas %></dd></div><% } %>
           <div><dt>Peran</dt><dd><%= member.jabatan || 'Anggota' %></dd></div>
-          <div><dt>Kelompok</dt><dd><%= settings.site_name %></dd></div>
+          <div><dt>Kelompok</dt><dd>KKN Dongkelan Nalarasa</dd></div>
         </dl>
         <% if (member.bio) { %>
           <h2>Biodata Singkat</h2>
@@ -29,15 +29,15 @@
 
     <% if (others && others.length) { %>
       <h2 class="others-title">Anggota Lainnya</h2>
-      <div class="member-grid compact">
+      <div class="speaker-grid compact">
         <% others.forEach(function (o) { %>
-          <article class="member-card reveal">
-            <a class="member-photo-link" href="/anggota/<%= o.id %>">
-              <%- include('../partials/avatar', { person: o, klass: 'member-photo' }) %>
+          <article class="speaker-card reveal">
+            <a class="speaker-photo-link" href="/anggota/<%= o.id %>">
+              <%- include('../partials/avatar', { person: o, klass: 'speaker-photo' }) %>
             </a>
-            <div class="member-body">
-              <span class="member-role"><%= o.jabatan || 'Anggota' %></span>
+            <div class="speaker-body">
               <h3><a href="/anggota/<%= o.id %>"><%= o.name %></a></h3>
+              <p class="speaker-role"><%= o.jabatan || 'Anggota' %></p>
             </div>
           </article>
         <% }); %>

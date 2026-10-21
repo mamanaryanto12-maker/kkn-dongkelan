@@ -9,18 +9,18 @@
 </section>
 
 <section class="section">
-  <div class="wrap member-grid">
+  <div class="wrap speaker-grid">
     <% members.forEach(function (m) { %>
-      <article class="member-card reveal">
-        <a class="member-photo-link" href="/anggota/<%= m.id %>">
-          <%- include('../partials/avatar', { person: m, klass: 'member-photo' }) %>
+      <article class="speaker-card reveal">
+        <a class="speaker-photo-link" href="/anggota/<%= m.id %>">
+          <%- include('../partials/avatar', { person: m, klass: 'speaker-photo' }) %>
         </a>
-        <div class="member-body">
-          <span class="member-role"><%= m.jabatan || 'Anggota' %></span>
+        <div class="speaker-body">
           <h3><a href="/anggota/<%= m.id %>"><%= m.name %></a></h3>
-          <% if (m.nim) { %><p class="member-nim">NIM <%= m.nim %></p><% } %>
-          <% if (m.prodi) { %><p class="member-prodi"><%= m.prodi %></p><% } %>
-          <% if (m.fakultas) { %><p class="member-fak"><%= m.fakultas %></p><% } %>
+          <p class="speaker-role"><%= m.jabatan || 'Anggota' %></p>
+          <% if (m.prodi) { %><p class="speaker-meta"><%= m.prodi %></p><% } %>
+          <% if (m.fakultas) { %><p class="speaker-meta"><%= m.fakultas %></p><% } %>
+          <% if (m.nim) { %><p class="speaker-meta">NIM <%= m.nim %></p><% } %>
         </div>
       </article>
     <% }); %>
