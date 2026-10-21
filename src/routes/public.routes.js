@@ -37,10 +37,26 @@ router.get('/', async (req, res) => {
     get('SELECT COUNT(*) AS c FROM programs'),
     get('SELECT COUNT(*) AS c FROM agendas'),
     get('SELECT COUNT(*) AS c FROM members'),
-    all(`SELECT * FROM agendas WHERE tanggal_selesai >= ? ORDER BY tanggal_mulai ASC LIMIT 4`, [today]),
+    all(`SELECT * FROM agendas WHERE tanggal_selesai >= ? ORDER BY tanggal_mulai ASC LIMIT 6`, [today]),
     all('SELECT * FROM gallery ORDER BY urutan ASC LIMIT 4'),
     getSettings(),
   ]);
+  const artikelList = [
+    {
+      slug: 'penerjunan-kkn',
+      judul: 'Penerjunan KKN Dongkelan Nalarasa',
+      tanggal: '12 Oktober 2026',
+      lokasi: 'Balai Desa Sidorejo',
+      kategori: 'Persiapan KKN',
+      kutipan: 'Penerjunan ini menjadi titik awal kami berproses bersama warga Dongkelan: belajar, berkolaborasi, dan berkontribusi lewat program-program yang disusun sesuai kebutuhan masyarakat.',
+      isi: `Kegiatan penerjunan menjadi awal perjalanan KKN Dongkelan Nalarasa di Padukuhan Dongkelan, Desa Sidorejo, Kecamatan Godean, Kabupaten Sleman. Pada hari Senin, 12 Oktober 2026, kami secara resmi diterjunkan oleh Universitas Negeri Yogyakarta melalui Ibu Aris Martiana, S.Pd., M.Si., bersama Bapak Isharyanto selaku Kepala Desa Sidorejo beserta perangkat desa lainnya.\n\nDalam kegiatan ini, kami diperkenalkan kepada warga dan tokoh masyarakat sekaligus menerima arahan dan harapan untuk pelaksanaan KKN selama dua bulan ke depan. Penerjunan ini menjadi titik awal kami berproses bersama warga Dongkelan: belajar, berkolaborasi, dan berkontribusi lewat program-program yang disusun sesuai kebutuhan masyarakat.\n\nTerima kasih kepada seluruh warga, perangkat padukuhan, dan semua pihak yang telah menyambut kami dengan hangat. Mohon bimbingan dan dukungannya selama kami mengabdi di Dongkelan.`,
+      sampul: '/img/dokumentasi/penerjunan-kkn/penerjunan-01.jpg',
+      galeri: [
+        { src: '/img/dokumentasi/penerjunan-kkn/penerjunan-01.jpg', alt: 'Penyerahan mahasiswa KKN oleh perwakilan UNY di Balai Desa Sidorejo' },
+        { src: '/img/dokumentasi/penerjunan-kkn/penerjunan-02.heic', alt: 'Penerjunan KKN Dongkelan Nalarasa di Balai Desa Sidorejo' }
+      ]
+    }
+  ];
   res.render('public/home', await baseLocals({
     nav: 'home', currentPath: '/', title: 'Beranda',
     programHighlights,
@@ -50,6 +66,7 @@ router.get('/', async (req, res) => {
     upcoming: upcoming.map(decorateAgenda),
     galeriSorotan,
     galeri: galeriSorotan,
+    artikelList,
   }, settings));
 });
 

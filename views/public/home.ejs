@@ -4,51 +4,38 @@
   <div class="hero-slider" data-hero-slider>
     <div class="hero-slider-track" data-hero-track>
       <article class="hero-slide is-active">
-        <img src="/img/foto-bersama.jpg" alt="Foto bersama kelompok KKN Dongkelan Nalarasa">
+        <img class="hero-bg-img" src="/img/foto-bersama.jpg" alt="" aria-hidden="true" loading="eager">
         <div class="hero-overlay"></div>
-        <div class="wrap hero-inner">
-          <div class="hero-content">
-            <h1 class="hero-title">Menumbuhkan Dusun Dongkelan Bersama Warga</h1>
-            <p class="hero-desc">KKN Dongkelan Nalarasa Universitas Negeri Yogyakarta hadir dengan semangat pengabdian berbasis kebutuhan warga melalui program kerja terarah dan berkelanjutan.</p>
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="/program">Jelajahi Program Kerja</a>
-              <a class="btn btn-ghost-light" href="/dokumentasi">Lihat Dokumentasi</a>
-            </div>
-          </div>
-        </div>
       </article>
       <% if (galeriSorotan && galeriSorotan[0]) { %>
         <article class="hero-slide">
-          <img src="<%= galeriSorotan[0].file %>" alt="<%= galeriSorotan[0].judul %>" loading="lazy">
+          <img class="hero-bg-img" src="<%= galeriSorotan[0].file %>" alt="" aria-hidden="true" loading="lazy">
           <div class="hero-overlay"></div>
-          <div class="wrap hero-inner">
-            <div class="hero-content">
-              <h1 class="hero-title">Sorotan Program Kerja</h1>
-              <p class="hero-desc"><%= galeriSorotan[0].keterangan || 'Berbagai program nyata untuk mendukung pemberdayaan masyarakat Dusun Dongkelan.' %></p>
-              <div class="hero-actions">
-                <a class="btn btn-primary" href="/program">Jelajahi Program Kerja</a>
-                <a class="btn btn-ghost-light" href="/dokumentasi">Lihat Dokumentasi</a>
-              </div>
-            </div>
-          </div>
         </article>
       <% } %>
       <% if (galeriSorotan && galeriSorotan[1]) { %>
         <article class="hero-slide">
-          <img src="<%= galeriSorotan[1].file %>" alt="<%= galeriSorotan[1].judul %>" loading="lazy">
+          <img class="hero-bg-img" src="<%= galeriSorotan[1].file %>" alt="" aria-hidden="true" loading="lazy">
           <div class="hero-overlay"></div>
-          <div class="wrap hero-inner">
-            <div class="hero-content">
-              <h1 class="hero-title">Jejak Pengabdian Bersama Warga</h1>
-              <p class="hero-desc"><%= galeriSorotan[1].keterangan || 'Sinergi dan kebersamaan dalam setiap langkah pengabdian di Dusun Dongkelan.' %></p>
-              <div class="hero-actions">
-                <a class="btn btn-primary" href="/program">Jelajahi Program Kerja</a>
-                <a class="btn btn-ghost-light" href="/dokumentasi">Lihat Dokumentasi</a>
-              </div>
-            </div>
-          </div>
         </article>
       <% } %>
+    </div>
+    <div class="hero-content-layer">
+      <div class="wrap hero-inner">
+        <div class="hero-content">
+          <h1 class="hero-title">Menumbuhkan Dusun Dongkelan Bersama Warga</h1>
+          <p class="hero-desc">KKN Dongkelan Nalarasa Universitas Negeri Yogyakarta hadir dengan semangat pengabdian berbasis kebutuhan warga melalui program kerja terarah dan berkelanjutan.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="/program">Jelajahi Program Kerja</a>
+            <a class="btn btn-ghost-light" href="/dokumentasi">Lihat Dokumentasi</a>
+          </div>
+          <div class="hero-info">
+            <div class="hero-info-item"><span>Lokasi</span><strong>Padukuhan Dongkelan, Desa Sidorejo</strong></div>
+            <div class="hero-info-item"><span>Periode</span><strong>12 Oktober - 14 Desember 2026</strong></div>
+            <div class="hero-info-item"><span>Perguruan Tinggi</span><strong>Universitas Negeri Yogyakarta</strong></div>
+          </div>
+        </div>
+      </div>
     </div>
     <button class="hero-nav hero-prev" data-hero-prev aria-label="Slide sebelumnya">‹</button>
     <button class="hero-nav hero-next" data-hero-next aria-label="Slide berikutnya">›</button>
