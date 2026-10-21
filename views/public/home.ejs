@@ -235,17 +235,17 @@
   </div>
 </section>
 
-<section class="section section-alt">
-  <div class="wrap location-grid">
+<section class="section section-lokasi">
+  <div class="wrap lokasi-grid">
     <div class="reveal">
       <p class="eyebrow">Lokasi Pengabdian</p>
       <h2><%= settings.lokasi_singkat %></h2>
       <p class="lede"><%= settings.lokasi %></p>
       <div class="location-actions">
-        <a class="btn btn-solid" href="https://maps.google.com/?q=<%= encodeURIComponent(settings.maps_query) %>" target="_blank" rel="noopener">Buka di Google Maps</a>
+        <a class="btn btn-primary" href="https://maps.google.com/?q=<%= encodeURIComponent(settings.maps_query) %>" target="_blank" rel="noopener">Buka di Google Maps</a>
       </div>
     </div>
-    <div class="reveal map-panel">
+    <div class="reveal lokasi-map">
       <div class="map-frame">
         <iframe title="Peta lokasi KKN" src="https://maps.google.com/maps?q=<%= encodeURIComponent(settings.maps_query) %>&z=14&output=embed"
           loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -254,51 +254,65 @@
   </div>
 </section>
 
-<section class="section section-alt">
-  <div class="wrap gallery-editorial">
-    <div class="gallery-editorial-header reveal">
+<section class="section section-jejak">
+  <div class="wrap">
+    <div class="section-head reveal section-head-row">
       <div>
         <p class="eyebrow">Dokumentasi</p>
-        <h2>Jejak kegiatan</h2>
+        <h2>Jejak Kegiatan</h2>
         <p class="lede">Kumpulan foto dan dokumen kegiatan KKN <%= settings.site_short %>.</p>
       </div>
-      <div class="gallery-editorial-nav">
-        <button class="gallery-editorial-btn" data-gallery-prev aria-label="Geser sebelumnya">←</button>
-        <button class="gallery-editorial-btn" data-gallery-next aria-label="Geser berikutnya">→</button>
-      </div>
+      <a class="btn btn-outline" href="/dokumentasi">Lihat semua dokumentasi</a>
     </div>
-    <div class="gallery-editorial-track-wrap reveal" data-reveal="scale">
-      <div class="gallery-editorial-track" data-gallery-track>
-        <% galeri.forEach(function (g, idx) { %>
-          <article class="gallery-editorial-card">
-            <div class="gallery-editorial-media">
-              <img src="<%= g.file %>" alt="<%= g.judul %>" loading="lazy">
+    <% if (typeof artikelList !== 'undefined' && artikelList.length) { %>
+      <div class="artikel-featured reveal">
+        <div class="artikel-featured-media">
+          <img src="<%= artikelList[0].sampul %>" alt="<%= artikelList[0].judul %>" loading="lazy">
+        </div>
+        <div class="artikel-featured-body">
+          <div class="artikel-meta">
+            <span class="artikel-badge"><%= artikelList[0].kategori %></span>
+            <span class="artikel-date"><%= artikelList[0].tanggal %></span>
+            <span class="artikel-loc"><%= artikelList[0].lokasi %></span>
+          </div>
+          <h3><%= artikelList[0].judul %></h3>
+          <p><%= artikelList[0].kutipan %></p>
+          <a class="text-link" href="/dokumentasi/<%= artikelList[0].slug %>">Baca selengkapnya →</a>
+        </div>
+      </div>
+    <% } %>
+    <div class="artikel-grid reveal">
+      <% if (typeof artikelList !== 'undefined' && artikelList.length > 1) { %>
+        <% artikelList.slice(1).forEach(function (a) { %>
+          <article class="artikel-card">
+            <div class="artikel-card-media">
+              <img src="<%= a.sampul %>" alt="<%= a.judul %>" loading="lazy">
             </div>
-            <div class="gallery-editorial-body">
-              <div class="gallery-editorial-meta">
-                <% if (g.kegiatan) { %><span class="gallery-editorial-kat"><%= g.kegiatan %></span><% } %>
-                <% if (g.tanggal) { %><span class="gallery-editorial-date"><%= formatTanggal(g.tanggal) %></span><% } %>
+            <div class="artikel-card-body">
+              <div class="artikel-meta">
+                <span class="artikel-badge"><%= a.kategori %></span>
+                <span class="artikel-date"><%= a.tanggal %></span>
               </div>
-              <h3 class="gallery-editorial-title"><%= g.judul %></h3>
-              <% if (g.keterangan) { %><p class="gallery-editorial-excerpt"><%= g.keterangan %></p><% } %>
-              <a class="gallery-editorial-link" href="/dokumentasi">Lihat dokumentasi <span>→</span></a>
+              <h3><%= a.judul %></h3>
+              <p><%= a.kutipan.length > 90 ? a.kutipan.substring(0,87) + '...' : a.kutipan %></p>
+              <a class="text-link" href="/dokumentasi/<%= a.slug %>">Baca selengkapnya →</a>
             </div>
           </article>
         <% }); %>
-        <% if (galeri.length === 0) { %>
-          <% galeriSorotan.forEach(function (g) { %>
-            <article class="gallery-editorial-card">
-              <div class="gallery-editorial-media">
-                <img src="<%= g.file %>" alt="<%= g.judul %>" loading="lazy">
-              </div>
-              <div class="gallery-editorial-body">
-                <h3 class="gallery-editorial-title"><%= g.judul %></h3>
-                <a class="gallery-editorial-link" href="/dokumentasi">Lihat dokumentasi <span>→</span></a>
-              </div>
-            </article>
-          <% }); %>
-        <% } %>
-      </div>
+      <% } %>
+      <% if (typeof artikelList === 'undefined' || artikelList.length === 0) { %>
+        <% galeri.forEach(function (g) { %>
+          <article class="artikel-card">
+            <div class="artikel-card-media">
+              <img src="<%= g.file %>" alt="<%= g.judul %>" loading="lazy">
+            </div>
+            <div class="artikel-card-body">
+              <h3><%= g.judul %></h3>
+              <a class="text-link" href="/dokumentasi">Lihat dokumentasi →</a>
+            </div>
+          </article>
+        <% }); %>
+      <% } %>
     </div>
   </div>
 </section>
