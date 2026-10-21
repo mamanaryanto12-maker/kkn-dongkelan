@@ -74,11 +74,25 @@
 </section>
 
 <section class="stats-bar">
-  <div class="wrap stats-grid">
-    <div class="stat-item"><span class="stat-num-big" data-count="<%= totalProgram %>"><%= totalProgram %></span><span class="stat-label-sm">Program Kerja</span></div>
-    <div class="stat-item"><span class="stat-num-big" data-count="<%= totalAgenda %>"><%= totalAgenda %></span><span class="stat-label-sm">Agenda</span></div>
-    <div class="stat-item"><span class="stat-num-big" data-count="<%= totalAnggota %>"><%= totalAnggota %></span><span class="stat-label-sm">Anggota</span></div>
-    <div class="stat-item"><span class="stat-num-big" data-count="2">2</span><span class="stat-label-sm">Rumpun</span></div>
+  <div class="wrap">
+    <div class="stats-row">
+      <article class="stats-card">
+        <span class="stats-num" data-count="<%= totalProgram %>"><%= totalProgram %></span>
+        <span class="stats-label">Program Kerja</span>
+      </article>
+      <article class="stats-card">
+        <span class="stats-num" data-count="<%= totalAgenda %>"><%= totalAgenda %></span>
+        <span class="stats-label">Agenda</span>
+      </article>
+      <article class="stats-card">
+        <span class="stats-num" data-count="<%= totalAnggota %>"><%= totalAnggota %></span>
+        <span class="stats-label">Anggota</span>
+      </article>
+      <article class="stats-card">
+        <span class="stats-num" data-count="2">2</span>
+        <span class="stats-label">Rumpun</span>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -165,16 +179,16 @@
     </div>
     <a class="btn btn-outline" href="/program">Lihat seluruh program kerja</a>
   </div>
-  <div class="wrap program-grid">
+  <div class="wrap program-grid program-grid-eq">
     <% programHighlights.forEach(function (p) { %>
       <article class="program-card reveal">
         <div class="program-card-top">
-          <span class="chip"><%= p.kategori %></span>
-          <span class="status status-<%= statusMeta(p.status).key %>"><%= statusMeta(p.status).label %></span>
+          <span class="badge badge-cat"><%= p.kategori %></span>
+          <span class="badge badge-status badge-<%= statusMeta(p.status).key %>"><%= statusMeta(p.status).label %></span>
         </div>
         <div class="program-card-body">
           <h3><%= p.nama %></h3>
-          <p class="program-desc"><%= p.deskripsi %></p>
+          <p class="program-desc"><%= p.deskripsi.length > 140 ? p.deskripsi.substring(0,137) + '...' : p.deskripsi %></p>
         </div>
         <div class="program-card-meta">
           <% if (p.sasaran) { %>
