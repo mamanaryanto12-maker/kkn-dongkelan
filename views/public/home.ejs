@@ -196,70 +196,41 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section section-agenda">
   <div class="wrap section-head reveal">
     <div>
       <p class="eyebrow">Agenda Kegiatan</p>
       <h2>Agenda kegiatan kelompok</h2>
       <p class="lede">Rangkaian agenda kegiatan KKN Dongkelan Nalarasa.</p>
+      <p class="muted">Jadwal rinci hanya untuk internal anggota kelompok.</p>
     </div>
   </div>
   <div class="wrap">
-    <div class="schedule-table-wrap reveal">
-      <table class="schedule-table">
-        <thead>
-          <tr>
-            <th>Tanggal/Waktu</th>
-            <th>Kegiatan</th>
-            <th>Lokasi</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% if (upcoming.length === 0) { %>
-            <tr><td colspan="4" class="schedule-empty">Belum ada agenda kegiatan.</td></tr>
-          <% } %>
-          <% upcoming.forEach(function (a) { %>
-            <tr>
-              <td>
-                <div class="schedule-date"><%= a.tanggal_mulai ? formatTanggal(a.tanggal_mulai) : '-' %></div>
-                <% if (a.jam_mulai) { %><div class="schedule-time"><%= a.jam_mulai %><% if (a.jam_selesai) { %> - <%= a.jam_selesai %><% } %></div><% } %>
-              </td>
-              <td>
-                <div class="schedule-title"><%= a.judul %></div>
-                <% if (a.kategori) { %><div class="schedule-sub"><%= a.kategori %></div><% } %>
-              </td>
-              <td><%= a.lokasi || '-' %></td>
-              <td><span class="status status-<%= statusMeta(a.status).key %>"><%= statusMeta(a.status).label %></span></td>
-            </tr>
-          <% }); %>
-        </tbody>
-      </table>
-    </div>
-    <div class="schedule-cards reveal">
+    <div class="timeline">
       <% if (upcoming.length === 0) { %>
-        <div class="schedule-empty-card">Belum ada agenda kegiatan.</div>
+        <div class="empty-state">Belum ada agenda kegiatan.</div>
+      <% } else { %>
+        <% upcoming.forEach(function (a) { %>
+          <article class="timeline-item reveal">
+            <div class="timeline-marker">
+              <span class="timeline-dot"></span>
+            </div>
+            <div class="timeline-card">
+              <div class="timeline-card-head">
+                <span class="timeline-chip"><%= a.tanggal_mulai ? formatTanggal(a.tanggal_mulai) : '-' %><% if (a.jam_mulai) { %> • <%= a.jam_mulai %><% if (a.jam_selesai) { %> - <%= a.jam_selesai %><% } %><% } %></span>
+                <span class="timeline-badge timeline-<%= ((statusMeta(a.status).key)||'rencana') %>"><%= statusMeta(a.status).label %></span>
+              </div>
+              <h3><%= a.judul %></h3>
+              <% if (a.kategori) { %><p class="timeline-desc"><%= a.kategori %></p><% } %>
+              <div class="timeline-meta">
+                <span class="timeline-icon">📍</span>
+                <span><%= a.lokasi || '-' %></span>
+                <span class="timeline-type">Program Kelompok</span>
+              </div>
+            </div>
+          </article>
+        <% }); %>
       <% } %>
-      <% upcoming.forEach(function (a) { %>
-        <article class="schedule-card">
-          <div class="schedule-card-row">
-            <span class="schedule-card-label">Tanggal/Waktu</span>
-            <span><%= a.tanggal_mulai ? formatTanggal(a.tanggal_mulai) : '-' %><% if (a.jam_mulai) { %> • <%= a.jam_mulai %><% if (a.jam_selesai) { %> - <%= a.jam_selesai %><% } %><% } %></span>
-          </div>
-          <div class="schedule-card-row">
-            <span class="schedule-card-label">Kegiatan</span>
-            <span><strong><%= a.judul %></strong><% if (a.kategori) { %><br><span class="muted"><%= a.kategori %></span><% } %></span>
-          </div>
-          <div class="schedule-card-row">
-            <span class="schedule-card-label">Lokasi</span>
-            <span><%= a.lokasi || '-' %></span>
-          </div>
-          <div class="schedule-card-row">
-            <span class="schedule-card-label">Status</span>
-            <span class="status status-<%= statusMeta(a.status).key %>"><%= statusMeta(a.status).label %></span>
-          </div>
-        </article>
-      <% }); %>
     </div>
   </div>
 </section>
