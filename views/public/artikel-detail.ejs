@@ -1,0 +1,55 @@
+<%- include('../partials/header', { title, settings, nav, currentPath }) %>
+
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">Dokumentasi</p>
+    <h1><%= artikel.judul %></h1>
+    <div class="artikel-meta">
+      <span class="artikel-badge"><%= artikel.kategori %></span>
+      <span class="artikel-date"><%= artikel.tanggal %></span>
+      <span class="artikel-loc"><%= artikel.lokasi %></span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap artikel-detail">
+    <figure class="artikel-cover">
+      <img src="<%= artikel.sampul %>" alt="<%= artikel.judul %>">
+    </figure>
+    <div class="artikel-body">
+      <% artikel.isi.split('\n\n').forEach(function(p){ %>
+        <% if(p.trim()){ %><p><%= p %></p><% } %>
+      <% }); %>
+    </div>
+    <% if (artikel.galeri && artikel.galeri.length) { %>
+      <div class="artikel-gallery">
+        <h2>Galeri Foto</h2>
+        <div class="gallery-grid">
+          <% artikel.galeri.forEach(function(g){ %>
+            <figure class="gallery-item">
+              <button class="gallery-thumb" data-lightbox data-src="<%= g.src %>" data-alt="<%= g.alt %>">
+                <img src="<%= g.src %>" alt="<%= g.alt %>" loading="lazy">
+                <span class="gallery-zoom">+</span>
+              </button>
+              <figcaption><span><%= g.alt %></span></figcaption>
+            </figure>
+          <% }); %>
+        </div>
+      </div>
+    <% } %>
+    <div class="artikel-back">
+      <a class="btn btn-outline" href="/dokumentasi">← Kembali ke Dokumentasi</a>
+    </div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lightbox-close" aria-label="Tutup">×</button>
+  <figure>
+    <img src="" alt="">
+    <figcaption></figcaption>
+  </figure>
+</div>
+
+<%- include('../partials/footer', { settings }) %>
