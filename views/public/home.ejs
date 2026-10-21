@@ -1,7 +1,6 @@
 <%- include('../partials/header', { title, settings, nav, currentPath }) %>
 
 <section class="hero">
-  <div class="hero-topo" aria-hidden="true" data-parallax="0.08"></div>
   <div class="wrap hero-grid">
     <div class="hero-copy reveal">
       <div class="hero-kicker">
@@ -29,53 +28,54 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="hero-media reveal" data-reveal="scale">
-      <div class="hero-slider" data-hero-slider>
-        <div class="hero-slider-track" data-hero-track>
-          <article class="hero-slide is-active">
-            <img src="/img/foto-bersama.jpg" alt="Foto bersama kelompok <%= settings.site_name %>" data-parallax="0.05">
+  <div class="hero-media reveal">
+    <div class="hero-slider" data-hero-slider>
+      <div class="hero-slider-track" data-hero-track>
+        <article class="hero-slide is-active">
+          <img src="/img/foto-bersama.jpg" alt="Foto bersama kelompok <%= settings.site_name %>">
+          <div class="hero-slide-content">
+            <span class="hero-slide-kicker">KKN <%= settings.site_short %></span>
+            <h3 class="hero-slide-title">Sinergi Nyata untuk Masyarakat</h3>
+            <p>Pengabdian berbasis kebutuhan warga, terwujud melalui program kerja yang terukur dan berkelanjutan.</p>
+            <div class="hero-actions">
+              <a class="btn btn-solid" href="/program">Lihat Program Kerja</a>
+              <a class="btn btn-outline" href="/dokumentasi">Jelajahi Dokumentasi</a>
+            </div>
+          </div>
+        </article>
+        <% if (galeriSorotan && galeriSorotan[0]) { %>
+          <article class="hero-slide">
+            <img src="<%= galeriSorotan[0].file %>" alt="<%= galeriSorotan[0].judul %>" loading="lazy">
             <div class="hero-slide-content">
-              <span class="hero-slide-kicker">Editorial Highlight</span>
-              <h3 class="hero-slide-title">Sinergi untuk Desa yang Berdaya</h3>
-              <p>Kolaborasi lintas bidang untuk solusi nyata bersama masyarakat.</p>
+              <span class="hero-slide-kicker">Jejak Pengabdian</span>
+              <h3 class="hero-slide-title"><%= galeriSorotan[0].judul %></h3>
+              <p><%= galeriSorotan[0].keterangan || 'Kolaborasi dan aksi nyata bersama warga.' %></p>
+              <div class="hero-actions">
+                <a class="btn btn-solid" href="/dokumentasi">Buka Dokumentasi</a>
+              </div>
             </div>
           </article>
-          <% if (galeriSorotan && galeriSorotan[0]) { %>
-            <article class="hero-slide">
-              <img src="<%= galeriSorotan[0].file %>" alt="<%= galeriSorotan[0].judul %>" loading="lazy">
-              <div class="hero-slide-content">
-                <span class="hero-slide-kicker">Dokumentasi Kegiatan</span>
-                <h3 class="hero-slide-title"><%= galeriSorotan[0].judul %></h3>
-                <p><%= galeriSorotan[0].keterangan || 'Jejak pengabdian bersama warga.' %></p>
+        <% } %>
+        <% if (galeriSorotan && galeriSorotan[1]) { %>
+          <article class="hero-slide">
+            <img src="<%= galeriSorotan[1].file %>" alt="<%= galeriSorotan[1].judul %>" loading="lazy">
+            <div class="hero-slide-content">
+              <span class="hero-slide-kicker">Program Unggulan</span>
+              <h3 class="hero-slide-title"><%= galeriSorotan[1].judul %></h3>
+              <p><%= galeriSorotan[1].keterangan || 'Solusi terarah untuk permasalahan desa.' %></p>
+              <div class="hero-actions">
+                <a class="btn btn-solid" href="/program">Lihat Program</a>
               </div>
-            </article>
-          <% } %>
-          <% if (galeriSorotan && galeriSorotan[1]) { %>
-            <article class="hero-slide">
-              <img src="<%= galeriSorotan[1].file %>" alt="<%= galeriSorotan[1].judul %>" loading="lazy">
-              <div class="hero-slide-content">
-                <span class="hero-slide-kicker">Program Unggulan</span>
-                <h3 class="hero-slide-title"><%= galeriSorotan[1].judul %></h3>
-                <p><%= galeriSorotan[1].keterangan || 'Wujud nyata pengabdian untuk masyarakat.' %></p>
-              </div>
-            </article>
-          <% } %>
-        </div>
-        <div class="hero-dots" data-hero-dots></div>
-        <div class="hero-slide-nav">
-          <button class="hero-nav-btn" data-hero-prev aria-label="Slide sebelumnya">←</button>
-          <button class="hero-nav-btn" data-hero-next aria-label="Slide berikutnya">→</button>
-        </div>
+            </div>
+          </article>
+        <% } %>
       </div>
-      <div class="hero-card reveal">
-        <div class="hero-card-badge">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-        </div>
-        <div class="hero-card-text">
-          <strong>Pengabdian Berorientasi Kebutuhan Warga</strong>
-          <span>Dirancang bersama masyarakat melalui observasi dan musyawarah.</span>
-        </div>
+      <div class="hero-dots" data-hero-dots></div>
+      <div class="hero-slide-nav">
+        <button class="hero-nav-btn" data-hero-prev aria-label="Slide sebelumnya">←</button>
+        <button class="hero-nav-btn" data-hero-next aria-label="Slide berikutnya">→</button>
       </div>
     </div>
   </div>
