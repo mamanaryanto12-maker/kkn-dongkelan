@@ -49,6 +49,7 @@ router.get('/', async (req, res) => {
     totalAnggota: totalAnggota.c,
     upcoming: upcoming.map(decorateAgenda),
     galeriSorotan,
+    galeri: galeriSorotan,
   }, settings));
 });
 
