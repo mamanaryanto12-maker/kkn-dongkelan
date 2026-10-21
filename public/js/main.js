@@ -129,6 +129,41 @@ document.addEventListener('DOMContentLoaded', function () {
     applyParallax();
   }
 
+  /* ---------- Hero crossfade ---------- */
+  var heroSlider = document.querySelector('[data-hero-slider]');
+  if (heroSlider) {
+    var slidesH = Array.from(heroSlider.querySelectorAll('.hero-slide'));
+    var prevH = heroSlider.querySelector('[data-hero-prev]');
+    var nextH = heroSlider.querySelector('[data-hero-next]');
+    var dotsWrapH = heroSlider.querySelector('[data-hero-dots]');
+    if (slidesH.length > 0) {
+      var idxH = 0;
+      var timerH;
+      function renderH() {
+        slidesH.forEach(function (s, i) { s.classList.toggle('is-active', i === idxH); });
+        if (dotsWrapH) {
+          Array.from(dotsWrapH.children).forEach(function (d, i) { d.classList.toggle('is-active', i === idxH); });
+        }
+      }
+      if (dotsWrapH) {
+        slidesH.forEach(function (_, i) {
+          var b = document.createElement('button');
+          b.className = 'hero-dot';
+          b.setAttribute('aria-label', 'Slide ' + (i + 1));
+          b.addEventListener('click', function () { idxH = i; renderH(); resetH(); });
+          dotsWrapH.appendChild(b);
+        });
+      }
+      if (prevH) prevH.addEventListener('click', function () { idxH = (idxH - 1 + slidesH.length) % slidesH.length; renderH(); resetH(); });
+      if (nextH) nextH.addEventListener('click', function () { idxH = (idxH + 1) % slidesH.length; renderH(); resetH(); });
+      function startH() { if (reduce) return; timerH = setInterval(function () { idxH = (idxH + 1) % slidesH.length; renderH(); }, 6500); }
+      function resetH() { clearInterval(timerH); startH(); }
+      heroSlider.addEventListener('mouseenter', function () { clearInterval(timerH); });
+      heroSlider.addEventListener('mouseleave', startH);
+      renderH(); startH();
+    }
+  }
+
   /* ---------- Sorot kursor di hero ---------- */
   var hero = document.querySelector('.hero');
   if (hero && !reduce && window.matchMedia('(hover: hover)').matches) {
